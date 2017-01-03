@@ -36,18 +36,19 @@ class Exam extends CI_Controller
    */
   public function Extracts($radio=10,$multiple=10,$TorF=5)
   {
-    $radio = unique_rand($this->Exam_model->RadioSum(),$radio);
-    $multi = unique_rand($this->Exam_model->MultiSum(),$multiple);
-    $TF    = unique_rand($this->Exam_model->TorFSum() ,$TorF);
-    $short = unique_rand($this->Exam_model->ShortSum());
-    $disc  = unique_rand($this->Exam_model->DissSum());
-    $writing = unique_rand($this->Exam_model->WritingSum());
+    $radio = $this->unique_rand($this->Exam_model->RadioSum(),$radio);
+    $multi = $this->unique_rand($this->Exam_model->MultiSum(),$multiple);
+    $TF    = $this->unique_rand($this->Exam_model->TorFSum() ,$TorF);
+    $short = $this->unique_rand($this->Exam_model->ShortSum());
+    $disc  = $this->unique_rand($this->Exam_model->DissSum());
+    $writing = $this->unique_rand($this->Exam_model->WritingSum());
     $result = array('radio' => $radio,'multiple'=>$multi,'TorF'=>$TF,'short'=>$short,'disc'=>$disc,'writing'=>$writing);
     return $result;
   }
 
   public function index()
   {
-    $data = $this->Exam_model->ReadTopic($this->Extracts(10,10,5))
+    $data = $this->Exam_model->ReadTopic($this->Extracts(10,10,5));
+    var_dump($data);
   }
 }

@@ -30,7 +30,7 @@ class Exam_model extends CI_Model
 
   public function ShortSum()
   {
-    return $this->db->count_all('Short_anwser');
+    return $this->db->count_all('Short_answer');
   }
 
   public function DissSum()
@@ -70,15 +70,15 @@ class Exam_model extends CI_Model
     }
 
     $this->db->select('topic');
-    $query = $this->db->get_where('Short_anwser',array('id'=>$para['short']));
+    $query = $this->db->get_where('Short_answer',array('id'=>$para['short'][0]));
     $ShortRes = $query->result_array();
 
     $this->db->select('topic');
-    $query = $this->db->get_where('Discussion',array('id'=>$para['disc']));
+    $query = $this->db->get_where('Discussion',array('id'=>$para['disc'][0]));
     $DiscRes = $query->result_array();
 
     $this->db->select('topic');
-    $query = $this->db->get_where('writing',array('id'=>$para['writing']));
+    $query = $this->db->get_where('writing',array('id'=>$para['writing'][0]));
     $writingRes = $query->result_array();
     return array(
       'radio'=>$RadioRes,
