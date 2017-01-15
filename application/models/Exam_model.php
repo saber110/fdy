@@ -13,6 +13,30 @@ class Exam_model extends CI_Model
     $this->load->database();
   }
 
+  public function SetRadio($value='')
+  {
+    return $this->db->insert('radio',$value);
+  }
+  public function SetMulti($value='')
+  {
+    return $this->db->insert('Multiple',$value);
+  }
+  public function SetTorF($value='')
+  {
+    return $this->db->insert('TorF',$value);
+  }
+  public function SetShort_answer($value='')
+  {
+    return $this->db->insert('Short_answer',$value);
+  }
+  public function SetDiscussion($value='')
+  {
+    return $this->db->insert('Discussion',$value);
+  }
+  public function SetWriting($value='')
+  {
+    return $this->db->insert('writing',$value);
+  }
   public function RadioSum()
   {
     return $this->db->count_all('radio');

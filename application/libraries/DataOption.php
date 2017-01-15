@@ -59,4 +59,9 @@ class DataOption
     header('Cache-Control: max-age=0');
     $objWriter->save('php://output');
   }
+
+  public function ImportRadio()
+  {
+    # code...
+  }
 }
