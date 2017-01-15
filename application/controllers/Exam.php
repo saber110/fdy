@@ -11,6 +11,7 @@ class Exam extends CI_Controller
   {
     parent::__construct();
     $this->load->model("Exam_model");
+    $this->load->library('DataOption');
   }
 
   /*
@@ -34,8 +35,12 @@ class Exam extends CI_Controller
    * 抽题
    * @return 题目序号
    */
-  public function Extracts($radio=10,$multiple=10,$TorF=5)
+  public function Extracts($radio=3,$multiple=2,$TorF=1)
   {
+    $radio=$this->Exam_model->RadioNum()['RadioNum'];
+    $multiple=$this->Exam_model->MultiNum()['MultiNum'];
+    $TorF=$this->Exam_model->TorFNum()['TorFNum'];
+    // echo $radio."<br \>".$multiple."<br \>".$TorF;
     $radio = $this->unique_rand($this->Exam_model->RadioSum(),$radio);
     $multi = $this->unique_rand($this->Exam_model->MultiSum(),$multiple);
     $TF    = $this->unique_rand($this->Exam_model->TorFSum() ,$TorF);
@@ -48,7 +53,32 @@ class Exam extends CI_Controller
 
   public function index()
   {
-    $data = $this->Exam_model->ReadTopic($this->Extracts(10,10,5));
-    var_dump($data);
+    $data['list'] = $this->Exam_model->ReadTopic($this->Extracts());
+    // var_dump($data['list']);
+    $this->load->view('exam/index',$data);
+    // var_dump($data);
+  }
+
+  public function admin()
+  {
+    $this->dataoption->Export();
+  }
+
+  public function score()
+  {
+    $RadioDeal = str_replace('myradio','',array_keys($this->input->post()));
+    $MultiDeal = str_replace('mycheckbox','',($RadioDeal));
+    $TorFDeal  = str_replace('myTorF','',($MultiDeal));
+    // var_dump($RadioDeal);
+    // echo "<br \>";
+    // var_dump($MultiDeal);echo "<br \>";
+    // var_dump($TorFDeal);echo "<br \>";
+    echo $this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()));
+
+  }
+
+  public function fenzhi()
+  {
+    var_dump($this->Exam_model->GetFenzhi(2,'radio'));
   }
 }

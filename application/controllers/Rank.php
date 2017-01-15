@@ -10,12 +10,13 @@ class Rank extends CI_Controller
   function __construct()
   {
     parent::__construct();
-    $this->load->model(Rank_model);
+    $this->load->model("Rank_model");
   }
 
   public function Personal_Ranking()
   {
-    $data = $this->Rank_model->Personal_Ranking(20);
+    $data = $this->Rank_model->Personal_Ranking(4);
+    var_dump($data);
     /*
     $this->load->view('rank/personal/header');
     $this->load->view('rank/personal/index',$data);
@@ -26,6 +27,7 @@ class Rank extends CI_Controller
   public function College_Ranking()
   {
     $data = $this->Rank_model->College_Ranking(10);
+    var_dump($data);
     /*
     $this->load->view('rank/college/header');
     $this->load->view('rank/college/index',$data);
@@ -36,6 +38,7 @@ class Rank extends CI_Controller
    public function Diligence_list()
    {
      $data = $this->Rank_model->Diligence_list(10);
+     var_dump($data);
      /*
      $this->load->view('rank/diligence/header');
      $this->load->view('rank/diligence/index',$data);
@@ -46,6 +49,7 @@ class Rank extends CI_Controller
    public function Error_Rate()
    {
      $data = $this->Rank_model->Error_Rate();
+     var_dump($data);
      /*
      $this->load->view('rank/error_rate/header');
      $this->load->view('rank/error_rate/index',$data);
