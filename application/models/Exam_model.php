@@ -13,6 +13,12 @@ class Exam_model extends CI_Model
     $this->load->database();
   }
 
+  public function Someone($yb_userid=7041045)
+  {
+    $this->db->select('yb_username');
+    $query = $this->db->get_where('examination',array('yb_userid'=>$yb_userid));
+    return count($query->result_array());
+  }
   public function SetRadio($value='')
   {
     return $this->db->insert('radio',$value);

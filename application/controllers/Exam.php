@@ -12,8 +12,16 @@ class Exam extends CI_Controller
     parent::__construct();
     $this->load->model("Exam_model");
     $this->load->library('DataOption');
-  }
 
+  }
+  /**
+   * @param 输入:所登录用户的易班id
+   * @param 输出:为零则需要后续建表操作
+   */
+  public function Someone($yb_userid = 7041045)
+  {
+    return $this->Exam_model->Someone($yb_userid);
+  }
   /*
   * array unique_rand( int $min, int $max, int $num )
   * 生成一定数量的不重复随机数
