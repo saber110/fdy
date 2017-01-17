@@ -6,13 +6,70 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Exam extends CI_Controller
 {
-
+  public $data;
   function __construct()
   {
     parent::__construct();
     $this->load->model("Exam_model");
     $this->load->library('DataOption');
 
+    // // 服务器
+    // $config = array('appID' => '1bafaee2c7b237e4',
+    //                'appSecret' => '37f8abf0110f0ef65908afc5e008524b',
+    //                 'callback' => "http://f.yiban.cn/iapp95569");
+    //本地测试
+   $config = array('appID' => '2603163d78712ee3',
+                       'appSecret' => '1ce9ffc76d284c5dde2a2002feed6c45',
+                        'callback' => "http://f.yiban.cn/iapp62933");
+     $this->load->library('YibanSDK', $config, 'yiban');
+     //var_dump($this->session->token);
+     //$au  = $this->yiban->getAuthorize();
+     //var_dump($token);
+    //  if (!$this->input->get('verify_request')) {
+    //      $this->session->url = $_SERVER['REQUEST_URI'];
+    //  }
+    //  //var_dump($this->session);
+    //  if (!isset($this->session->token)) {     // 未获取授权
+    //  /**
+    //   * 从授权服务器回调返回时，URL中带有code（授权码）参数
+    //   *
+    //   */
+    //
+    //      $au  = $this->yiban->getAuthorize();
+    //      //var_dump($this->input->post());
+    //      if ($this->input->get('verify_request')) {
+    //      /**
+    //       * 使用授权码（code）获取访问令牌
+    //       * 若获取成功，返回 $info['access_token']
+    //       * 否则查看对应的 msgCN 查看错误信息
+    //       */
+    //          $info = $this->yiban->getFrameUtil()->perform();
+    //          //var_dump($info);
+    //          if (!isset($info['visit_oauth']['access_token'])) {
+    //              //echo $info['msgCN'];
+    //              redirect($au->forwardurl());
+    //          }
+    //          $this->session->token = $info['visit_oauth']['access_token'];
+    //          $this->data['user_info']['yb_userid'] = $info['visit_user']['userid'];
+    //          $this->data['user_info']['yb_username'] = $info['visit_user']['username'];
+    //          header("Location: " . $this->session->url);
+    //      }
+    //      else {   // 重定向到授权服务器（原sdk使用header()重定向）
+    //          redirect($au->forwardurl());
+    //          // header('Location: ' . $au->forwardurl());
+    //      }
+    //  }
+    //  if(!isset($this->data['user_info']) && $this->session->token){
+    //      $this->user = $this->yiban->getUser($this->session->token);
+    //      $this->data['user_info'] = $this->user->me()['info'];
+    //  }
+    //
+    //
+    $this->data['user_info']['yb_userid'] = 7041045;
+    if($this->Someone($this->data['user_info']['yb_userid'])===0)
+    {
+      $this->CreateTable($this->data['user_info']['yb_userid']);
+    }
   }
   /**
    * @param 输入:所登录用户的易班id
@@ -21,6 +78,11 @@ class Exam extends CI_Controller
   public function Someone($yb_userid = 7041045)
   {
     return $this->Exam_model->Someone($yb_userid);
+  }
+
+  public function CreateTable($yb_userid = 7041045)
+  {
+    return $this->Exam_model->CreateTable("ex_".$yb_userid);
   }
   /*
   * array unique_rand( int $min, int $max, int $num )
@@ -81,7 +143,14 @@ class Exam extends CI_Controller
     // echo "<br \>";
     // var_dump($MultiDeal);echo "<br \>";
     // var_dump($TorFDeal);echo "<br \>";
-    echo $this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()));
+    // var_dump(json_encode($this->input->post()));
+    // print_r($this->Exam_model->RScore(array_values($TorFDeal),array_values($this->input->post())));
+    echo "CHENGJ".$this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()))['score'];
+    // echo $this->Exam_model->InsertScore($this->data['user_info']['yb_userid'],
+    //                                $this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()))['score'],
+    //                                json_encode($this->input->post()),
+    //                                json_encode($this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()))['wrong'])
+    //                              );
 
   }
 
