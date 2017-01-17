@@ -4,7 +4,7 @@
  * application/libraries/My_email.php
  * 邮件封装
  * @author hhb huhaobin110@gmail.com
- * @date 2016/10/21
+ * @date 2016/10/21    linux
  */
 
 class My_email{

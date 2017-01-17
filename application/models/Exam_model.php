@@ -14,6 +14,58 @@ class Exam_model extends CI_Model
     $this->load->dbforge();
   }
 
+  public function UpdateExamination(
+                                    $yb_userid=7041045,
+                                    $yb_username="胡皓斌",
+                                    $name = "胡皓斌",
+                                    $college = "物电院",
+                                    $phone = 15675123342,
+                                    $email = "huhaobin110@gmail.com",
+                                    $score=0)
+  {
+    $this->db->select('most_score');
+    $query = $this->db->get_where('examination',array('yb_userid'=>$yb_userid));
+    if($score > ($query->row_array())['most_score'])
+    {
+      $data = array(
+        'yb_username' => $yb_username,
+        'name'        => $name,
+        'college'     => $college,
+        'phone'       => $phone,
+        'email'       => $email,
+        'most_score'   => $score
+      );
+      $this->db->where('yb_userid',$yb_userid);
+      return $this->db->update('examination',$data);
+    }
+    else {
+      return "no";
+    }
+  }
+
+  public function UpdateCollege($college='物电院')
+  {
+    $this->db->select('college');
+    $query = $this->db->get_where('examination',array('college'=>$college));
+    $stuff = count($query->result_array());
+
+    $this->db->select_max('most_score');
+    $this->db->where('college',$college);
+    $query = $this->db->get('examination');
+    $score = $query->result_array()['most_score'];
+
+    $this->db->select('exam_num');
+    $query = $this->db->get_where('college',array('college' => $college));
+    $NumOld = $query->result_array()['exam_num'];
+
+    $data = array(
+      'stuff' => $stuff,
+      'score' => $score,
+      'exam_num' => ($NumOld+1)
+    );
+    $this->db->where('college',$college);
+    return $this->db->update('college',$data);
+  }
   public function Someone($yb_userid=7041045)
   {
     $this->db->select('yb_username');
@@ -362,5 +414,12 @@ return array('score'=>$score/*,'wrong'=>$wrong*/);
       'score'  => $score,
       'wrong'  => $wrong
     ));
+  }
+
+  public function Admin($yb_userid = 7041045)
+  {
+    $this->db->select('id');
+    $query = $this->db->get_where('setting',array('yb_userid'=>$yb_userid));
+    return count($query->result_array());
   }
 }
