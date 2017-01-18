@@ -20,10 +20,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      }
    }
 
+   public function Delete($type='TorF',$id=10,$Batch_operation=FALSE)
+   {
+     if($Batch_operation)       //如果是批量操作
+     {
+       foreach ($id as $value)
+       {
+         $this->Admin_model->Delete($type,$value);
+       }
+       $this->Admin_model->Resort($type);
+     }
+     else
+     {
+      $result = $this->Admin_model->Delete($type,$id);
+      $this->Admin_model->Resort($type);
+      return $result;
+     }
+   }
+   
+   public function Edit($type='radio',$id=1,$anwser  ="A",
+                        $fenzhi  =2,
+                        $topic   ="测试",
+                        $option_A="测试答案A",
+                        $option_B='测试答案B',
+                        $option_C='测试答案C',
+                        $option_D='测试答案D',
+                        $option_E="测试答案E",
+                        $option_F='测试答案F',
+                        $option_G='测试答案G',
+                        $option_H='测试答案H',
+                        $more    =0,
+                        $short   =2
+                        )
+   {
+     switch ($type) {
+       case 'radio':
+         $this->Admin_model->Edit($type,$id,$anwser,$fenzhi,$option_A,$option_B,$option_C,$option_D);
+         break;
+       case 'multi':
+         $this->Admin_model->Edit($type,$id,$anwser,$fenzhi,$option_A,$option_B,$option_C,$option_D,$option_E,$option_F,$option_G,$option_H);
+         break;
+       case 'TorF':
+         $this->Admin_model->Edit($type,$id,$anwser,$fenzhi);
+         break;
+       case 'Disc':
+         $this->Admin_model->Edit($type,$id,$anwser,$fenzhi);
+         break;
+       case 'Writing':
+         $this->Admin_model->Edit($type,$id,$anwser,$fenzhi);
+         break;
+       default:
+         echo "禁止操作";
+         break;
+     }
+   }
+
    public function index()
    {
      echo "胡皓斌";
    }
+
    public function Export()
    {
      $this->dataoption->Export();
