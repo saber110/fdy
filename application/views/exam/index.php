@@ -1,78 +1,38 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>考试</title>
-  </head>
-  <body>
-    <form method="post" action='./Exam/score'>
-      <?php
-      if(!empty($list['radio'])) {
-        $num = 0;
-        foreach ($list['radio'] as $key) {
-          foreach ($key as $value) {
-            // var_dump($value);
-            $num ++;
-            echo $num.' '.$value['topic']."<br \>";
-            echo '<input type="radio" class = "radio" id = "myradio'.$num.'" name="myradio'.$value['id'].'" value="A" />'.$value['option_A']."<br \>";
-            echo '<input type="radio" class = "radio" id = "myradio'.$num.'" name="myradio'.$value['id'].'" value="B" />'.$value['option_B']."<br \>";
-            echo '<input type="radio" class = "radio" id = "myradio'.$num.'" name="myradio'.$value['id'].'" value="C" />'.$value['option_C']."<br \>";
-            echo '<input type="radio" class = "radio" id = "myradio'.$num.'" name="myradio'.$value['id'].'" value="D" />'.$value['option_D']."<br \>";
+<form method="post" action='./Exam/score'>
+	<div class="wrapper">
+	<div id="answer" class="card_wrap">
+		<?php
+		if(!empty($list['radio'])) {
+			$num = 0;
+			foreach ($list['radio'] as $key) {
+				foreach ($key as $value) {
+					// var_dump($value);
+					$num ++;
+					echo '<div class="card_cont card'.$num.'">';
+					echo "<div class='card'>";
+					echo "<p class='question'>"."<span>Q$num </span>".$value['topic']."</p>";
+					echo "<ul class='select'>";
+					echo '<li>'.'<input id="q'.$num.'_1" type="radio" value="A" name="myradio'.$value["id"].'">'.'<label for="q'.$num.'_1">'.$value['option_A']."</label></li>";
+					echo '<li>'.'<input id="q'.$num.'_2" type="radio" value="B" name="myradio'.$value["id"].'">'.'<label for="q'.$num.'_2">'.$value['option_B']."</label></li>";
+					echo '<li>'.'<input id="q'.$num.'_3" type="radio" value="C" name="myradio'.$value["id"].'">'.'<label for="q'.$num.'_3">'.$value['option_C']."</label></li>";
+					echo '<li>'.'<input id="q'.$num.'_4" type="radio" value="D" name="myradio'.$value["id"].'">'.'<label for="q'.$num.'_4">'.$value['option_D']."</label></li>";
+					echo "</ul>";
+					if($num == 1)
+					{
+						echo "<div class='card_bottom'><span><b>$num</b>/$number</span></div>";
+					}
+					else
+					{
+						echo "<div class='card_bottom'><a class='prev'>上一题</a><span><b>$num</b>/$number</span></div>";
+					}
+					echo "</div>";
+					echo "</div>";
+				}
+			}
 
-          }
-        }
-      }
-      if (!empty($list['multi'])) {
-        $num = 0;
-        foreach ($list['multi'] as $key) {
-          foreach ($key as $value) {
-            // var_dump($value);
-            $num ++;
-            echo $num.' '.$value['topic']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="A" />'.$value['option_A']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="B" />'.$value['option_B']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="C" />'.$value['option_C']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="D" />'.$value['option_D']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="E" />'.$value['option_E']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="F" />'.$value['option_F']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="G" />'.$value['option_G']."<br \>";
-            echo '<input type="checkbox" class = "checkbox" id = "mycheckbox'.$num.'" name="mycheckbox'.$value['id'].'[]" value="H" />'.$value['option_H']."<br \>";
-          }
-        }
-      }
-      if (!empty($list['TorF'])) {
-        $num = 0;
-        foreach ($list['TorF'] as $key) {
-          foreach ($key as $value) {
-            // var_dump($value);
-            $num ++;
-            echo $value['topic']."<br \>"."<br \>";
-            echo '<input type="radio" class = "TorF" id = "myTorF'.$num.'" name="myTorF'.$value['id'].'" value="1" />'."正确"."<br \>";
-            echo '<input type="radio" class = "TorF" id = "myTorF'.$num.'" name="myTorF'.$value['id'].'" value="0" />'."错误"."<br \>";
-
-          }
-        }
-      }
-
-      // foreach ($list['short'] as $key) {
-      //   foreach ($key as $value) {
-      //       echo $value."<br />";
-      //   }
-      // }
-      // foreach ($list['disc'] as $key) {
-      //   foreach ($key as $value) {
-      //       echo $value."<br />";
-      //   }
-      // }
-      // foreach ($list['writ'] as $key) {
-      //   foreach ($key as $value) {
-      //       echo $value."<br />";
-      //   }
-      // }
-      // print_r($list);
-      ?>
-      <input type="submit" value="提交">
-    </form>
-
-  </body>
-</html>
+		}
+		?>
+	</div><!--/card_wrap-->
+</div>
+<input type="submit" value="提交">
+</form>

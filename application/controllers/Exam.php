@@ -117,11 +117,13 @@ class Exam extends CI_Controller
     $TorF=$this->Exam_model->TorFNum()['TorFNum'];
     // echo $radio."<br \>".$multiple."<br \>".$TorF;
     $radio = $this->unique_rand($this->Exam_model->RadioSum(),$radio);
-    $multi = $this->unique_rand($this->Exam_model->MultiSum(),$multiple);
-    $TF    = $this->unique_rand($this->Exam_model->TorFSum() ,$TorF);
-    $short = $this->unique_rand($this->Exam_model->ShortSum());
-    $disc  = $this->unique_rand($this->Exam_model->DissSum());
-    $writing = $this->unique_rand($this->Exam_model->WritingSum());
+    // $multi = $this->unique_rand($this->Exam_model->MultiSum(),$multiple);
+    // $TF    = $this->unique_rand($this->Exam_model->TorFSum() ,$TorF);
+    // $short = $this->unique_rand($this->Exam_model->ShortSum());
+    // $disc  = $this->unique_rand($this->Exam_model->DissSum());
+    // $writing = $this->unique_rand($this->Exam_model->WritingSum());\
+    //下句仅供测试使用
+    $multi = $TF = $short = $disc = $writing ='';
     $result = array('radio' => $radio,'multiple'=>$multi,'TorF'=>$TF,'short'=>$short,'disc'=>$disc,'writing'=>$writing);
     return $result;
   }
@@ -129,13 +131,18 @@ class Exam extends CI_Controller
   public function index()
   {
     $data['list'] = $this->Exam_model->ReadTopic($this->Extracts());
+    $data['number'] = $this->Exam_model->RadioNum()['RadioNum'];
     // var_dump($data['list']);
+    $this->load->view('exam/header');
     $this->load->view('exam/index',$data);
+    $this->load->view('exam/footer');
     // var_dump($data);
   }
 
   public function score()
   {
+    var_dump($this->input->post());
+    exit;
     $RadioDeal = str_replace('myradio','',array_keys($this->input->post()));
     $MultiDeal = str_replace('mycheckbox','',($RadioDeal));
     $TorFDeal  = str_replace('myTorF','',($MultiDeal));

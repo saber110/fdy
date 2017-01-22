@@ -193,36 +193,36 @@ class Exam_model extends CI_Model
       $RadioRes[$RadioNum++] = $query->result_array();
     }
     $MultiNum = 0;
-    foreach ($para['multiple'] as $id) {
-      $this->db->select('id,topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H');
-      $query = $this->db->get_where('Multiple',array('id'=>$id));
-      $MultiRes[$MultiNum++] = $query->result_array();
-    }
-    $TorFNum = 0;
-    foreach ($para['TorF'] as $id) {
-      $this->db->select('id,topic');
-      $query = $this->db->get_where('TorF',array('id'=>$id));
-      $TorFRes[$TorFNum++] = $query->result_array();
-    }
-
-    $this->db->select('id,topic');
-    $query = $this->db->get_where('Short_answer',array('id'=>$para['short'][0]));
-    $ShortRes = $query->result_array();
-
-    $this->db->select('id,topic');
-    $query = $this->db->get_where('Discussion',array('id'=>$para['disc'][0]));
-    $DiscRes = $query->result_array();
-
-    $this->db->select('id,topic');
-    $query = $this->db->get_where('writing',array('id'=>$para['writing'][0]));
-    $writingRes = $query->result_array();
+    // foreach ($para['multiple'] as $id) {
+    //   $this->db->select('id,topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H');
+    //   $query = $this->db->get_where('Multiple',array('id'=>$id));
+    //   $MultiRes[$MultiNum++] = $query->result_array();
+    // }
+    // $TorFNum = 0;
+    // foreach ($para['TorF'] as $id) {
+    //   $this->db->select('id,topic');
+    //   $query = $this->db->get_where('TorF',array('id'=>$id));
+    //   $TorFRes[$TorFNum++] = $query->result_array();
+    // }
+    //
+    // $this->db->select('id,topic');
+    // $query = $this->db->get_where('Short_answer',array('id'=>$para['short'][0]));
+    // $ShortRes = $query->result_array();
+    //
+    // $this->db->select('id,topic');
+    // $query = $this->db->get_where('Discussion',array('id'=>$para['disc'][0]));
+    // $DiscRes = $query->result_array();
+    //
+    // $this->db->select('id,topic');
+    // $query = $this->db->get_where('writing',array('id'=>$para['writing'][0]));
+    // $writingRes = $query->result_array();
     return array(
-      'radio'=>$RadioRes,
-      'multi'=>$MultiRes,
-      'TorF' =>$TorFRes,
-      'short'=>$ShortRes,
-      'disc' =>$DiscRes,
-      'writ' =>$writingRes
+      'radio'=>$RadioRes
+      // 'multi'=>$MultiRes,
+      // 'TorF' =>$TorFRes,
+      // 'short'=>$ShortRes,
+      // 'disc' =>$DiscRes,
+      // 'writ' =>$writingRes
     );
   }
 
