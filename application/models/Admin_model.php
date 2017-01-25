@@ -12,7 +12,22 @@ class Admin_model extends CI_Model
     parent::__construct();
     $this->load->database();
   }
+  public function PartCollege()
+  {
+    $this->db->order_by('staff', 'DESC');
+    $query = $this->db->get('college');
+    return $query->result_array();
+  }
+  public function ExportDataList($value='college')
+  {
+    return $this->db->list_fields($value);
+  }
 
+  public function Statics($value='college')
+  {
+    $query = $this->db->get($value);
+    return $query->result_array();
+  }
   public function Delete($type='',$id)
   {
     $query  = $this->db->delete($type,array('id' => $id));

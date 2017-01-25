@@ -20,6 +20,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      }
    }
 
+   public function Analyse($value='')
+   {
+     $data['all']   = $this->Admin_model->PartCollege();
+     if($data['all'][9])
+      $i = 0;$chartw='[';
+      foreach ($data['all'] as $key => $value) {
+        $chartw .= '{'. 'label:'.' "'.$data['all'][$i]['college'].'", data: '.$data['all'][$i]['staff'].'},';
+        $i ++;
+      }
+      $chartw .= ']';
+      $chart['chart'] = $chartw;
+      $this->load->view('admin/header');
+      $this->load->view('admin/analyse',$data);
+      $this->load->view('admin/footer',$chart);
+   }
    public function Delete($type='TorF',$id=10,$Batch_operation=FALSE)
    {
      if($Batch_operation)       //如果是批量操作
@@ -37,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       return $result;
      }
    }
-   
+
    public function Edit($type='radio',$id=1,$anwser  ="A",
                         $fenzhi  =2,
                         $topic   ="测试",
@@ -77,12 +92,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
    public function index()
    {
-     echo "胡皓斌";
+     $this->load->view('admin/header');
+     $this->load->view('admin/index');
+     $this->load->view('admin/footer');
    }
 
    public function Export()
    {
-     $this->dataoption->Export();
+     $this->load->view('admin/header');
+     $this->load->view('admin/export');
+     $this->load->view('admin/footer');
+   }
+
+   public function ExportData($value='college',$yb_id=7041045)
+   {
+     $subtitle;
+     switch ($value) {
+       case 'college':
+         {
+           $base = 'A';$array_num=0;$data = ($this->Admin_model->ExportDataList($value));
+           foreach ($data as $key => $value) {
+             $temp[$array_num++] = $base++.'1';
+           }
+           $subtitle = array_combine(array_values($temp),array_values($data));
+           $contents = $this->Admin_model->Statics('college');
+         }
+         break;
+      case 'personal':
+        {
+          $base = 'A';$array_num=0;$data = ($this->Admin_model->ExportDataList('ex_'.$yb_id));
+          foreach ($data as $key => $value) {
+            $temp[$array_num++] = $base++.'1';
+          }
+          $subtitle = array_combine(array_values($temp),array_values($data));
+          $contents = $this->Admin_model->Statics('ex_'.$yb_id);
+        }
+        break;
+      case 'all':
+      {
+        $base = 'A';$array_num=0;$data = ($this->Admin_model->ExportDataList("examination"));
+        foreach ($data as $key => $value) {
+          $temp[$array_num++] = $base++.'1';
+        }
+        $subtitle = array_combine(array_values($temp),array_values($data));
+        $contents = $this->Admin_model->Statics("examination");
+      }
+        break;
+       default:
+         echo "禁止操作";
+         break;
+     }
+    //  var_dump($subtitle);
+    // var_dump($this->Admin_model->Statics());
+    // exit;
+     $this->dataoption->Export('中南大学辅导员考试学习园地',
+                             $subtitle,
+                             $contents,
+                             '中南易班.xls');
    }
 
    public function ImportRadio()
@@ -99,7 +165,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      if (!$this->upload->do_upload('userfile')) {
          $data['error'] = $this->upload->display_errors();
-         $this->load->view('exam/admin/index',$data);
+         $data['link']  = 'ImportRadio';
+         $this->load->view('admin/header');
+         $this->load->view('admin/import',$data);
+         $this->load->view('admin/footer');
      } else {
          $upload_data = array('upload_data' => $this->upload->data());
          // var_dump($upload_data);
@@ -160,7 +229,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      if (!$this->upload->do_upload('userfile')) {
          $data['error'] = $this->upload->display_errors();
-         $this->load->view('exam/admin/index',$data);
+         $data['link']  = 'ImportMulti';
+         $this->load->view('admin/header');
+         $this->load->view('admin/import',$data);
+         $this->load->view('admin/footer');
      } else {
        $upload_data = array('upload_data' => $this->upload->data());
        // var_dump($upload_data);
@@ -228,7 +300,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      if (!$this->upload->do_upload('userfile')) {
          $data['error'] = $this->upload->display_errors();
-         $this->load->view('exam/admin/index',$data);
+         $data['link']  = 'ImportTorF';
+         $this->load->view('admin/header');
+         $this->load->view('admin/import',$data);
+         $this->load->view('admin/footer');
      } else {
          $upload_data = array('upload_data' => $this->upload->data());
          // var_dump($upload_data);
@@ -284,7 +359,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      if (!$this->upload->do_upload('userfile')) {
          $data['error'] = $this->upload->display_errors();
-         $this->load->view('exam/admin/index',$data);
+         $data['link']  = 'ImportShort_answer';
+         $this->load->view('admin/header');
+         $this->load->view('admin/import',$data);
+         $this->load->view('admin/footer');
      } else {
          $upload_data = array('upload_data' => $this->upload->data());
          // var_dump($upload_data);
@@ -340,7 +418,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      if (!$this->upload->do_upload('userfile')) {
          $data['error'] = $this->upload->display_errors();
-         $this->load->view('exam/admin/index',$data);
+         $data['link']  = 'ImportDiscussion';
+         $this->load->view('admin/header');
+         $this->load->view('admin/import',$data);
+         $this->load->view('admin/footer');
      } else {
          $upload_data = array('upload_data' => $this->upload->data());
          // var_dump($upload_data);
@@ -396,7 +477,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      if (!$this->upload->do_upload('userfile')) {
          $data['error'] = $this->upload->display_errors();
-         $this->load->view('exam/admin/index',$data);
+         $data['link']  = 'ImportWriting';
+         $this->load->view('admin/header');
+         $this->load->view('admin/import',$data);
+         $this->load->view('admin/footer');
      } else {
          $upload_data = array('upload_data' => $this->upload->data());
          // var_dump($upload_data);
