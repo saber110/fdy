@@ -8,15 +8,13 @@
           <div class="panel-body">
               <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                   <thead>
+                    <!-- <?php var_dump($fileds); ?> -->
                       <tr >
-                          <th>序号</th>
-                          <th>题目</th>
-                          <th>A</th>
-                          <th>B</th>
-                          <th>C</th>
-                          <th>D</th>
-                          <th>答案</th>
-                          <th>分值</th>
+                        <?php
+                          foreach ($fileds as $value) {
+                            echo "<th>".$value."</th>";
+                          }
+                         ?>
                           <th>操作</th>
                       </tr>
                   </thead>

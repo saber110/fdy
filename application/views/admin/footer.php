@@ -17,6 +17,7 @@ function edit(status){
 }
 function  submit(status)
 {
+  var id = document.getElementsByTagName('input')[1].value;
   var title = document.getElementsByTagName('input')[2].value;
   var a = document.getElementsByTagName('input')[3].value;
   var b = document.getElementsByTagName('input')[4].value;
@@ -24,27 +25,32 @@ function  submit(status)
   var d = document.getElementsByTagName('input')[6].value;
   var daan = document.getElementsByTagName('input')[7].value;
   var fen = document.getElementsByTagName('input')[8].value;
-  var jsonds = {};
-  var jsond = {};
-  jsond["title"] = title;
-  jsond["a"]     = a;
-  jsond["b"]     = b;
-  jsond["c"]     = c;
-  jsond["d"]     = d;
-  jsond["daan"]  = daan;
-  jsond["fen"]   = fen;
-  jsonds.push(jsond);
-  var jsonString = JSON.stringify(jsonds);
-  console.log(jsonString);
-  $.get("Edit/radio/"+status+"/"+daan+"/"+fen+"/"+(a)+"/"+b+"/"+c+"/"+d, function(data){
-    alert(data);
-		// ret = $.parseJSON(data);
-		// $deal_id = ret.status;
-		// if(ret.msg != 1)
-		// $("#"+$deal_id).html('是');
-		// else
-		// 	alert("更新失败，请重试");
-	})
+  var type = "<?php echo $type; ?>";
+  $.post("Edit",{ type: type,id:id,title: title,a:a,b:b,c:c,d:d,daan:daan,fen:fen},function (result) {
+    location.reload(true);
+  }
+  )
+  // var jsonds = {};
+  // var jsond = {};
+  // jsond["title"] = title;
+  // jsond["a"]     = a;
+  // jsond["b"]     = b;
+  // jsond["c"]     = c;
+  // jsond["d"]     = d;
+  // jsond["daan"]  = daan;
+  // jsond["fen"]   = fen;
+  // jsonds.push(jsond);
+  // var jsonString = JSON.stringify(jsonds);
+  // console.log(jsonString);
+  // $.get("Edit/radio/"+status+"/"+daan+"/"+fen+"/"+(a)+"/"+b+"/"+c+"/"+d, function(data){
+  //   alert(data);
+	// 	// ret = $.parseJSON(data);
+	// 	// $deal_id = ret.status;
+	// 	// if(ret.msg != 1)
+	// 	// $("#"+$deal_id).html('是');
+	// 	// else
+	// 	// 	alert("更新失败，请重试");
+	// })
 }
 </script>
 

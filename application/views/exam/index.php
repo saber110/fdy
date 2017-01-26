@@ -34,5 +34,5 @@
 		?>
 	</div><!--/card_wrap-->
 </div>
-<input type="submit" value="提交">
+<input onclick="score()" type="text" value="提交">
 </form>

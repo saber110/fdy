@@ -65,15 +65,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       $this->Admin_model->Resort($type);
       return $result;
      }
-   }
-
-   public function EditDelete($value='radio')
-   {
      $reslut['lists'] = $this->Getall($value);
      $reslut['type'] = $value;
     //  var_dump($reslut['lists']);
      $this->load->view('admin/header');
      $this->load->view('admin/EditDelete',$reslut);
+     $this->load->view('admin/footer');
+   }
+
+   public function EditDelete($value='radio')
+   {
+     $result['fileds'] = $this->Admin_model->ExportDataList($value);
+     if($value=='radio' || $value=='Multiple' ||$value=='TorF')
+        {array_splice($result['fileds'],-3,3);}
+      else {
+        array_splice($result['fileds'],-1,1);
+      }
+     $result['lists'] = $this->Getall($value);
+     $result['type'] = $value;
+    //  var_dump($reslut['lists']);
+     $this->load->view('admin/header');
+     $this->load->view('admin/EditDelete',$result);
      $this->load->view('admin/footer');
    }
    public function Edit($type='radio',$id=1,$anwser  ="A",
@@ -91,10 +103,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         $short   =2
                         )
    {
-     switch ($type) {
+     switch ($this->input->post()['type']) {
        case 'radio':
-        echo $option_A;
-        //  $this->Admin_model->Edit($type,$id,$anwser,$fenzhi,$option_A,$option_B,$option_C,$option_D);
+       {
+         // var_dump($this->input->post());
+          echo $this->Admin_model->Edit($this->input->post()['type'],$this->input->post()['id'],
+          $this->input->post()['daan'],$this->input->post()['fen'],$this->input->post()['title'],$this->input->post()['a'],
+          $this->input->post()['b'],$this->input->post()['c'],$this->input->post()['d']);
+       }
          break;
        case 'multi':
          $this->Admin_model->Edit($type,$id,$anwser,$fenzhi,$option_A,$option_B,$option_C,$option_D,$option_E,$option_F,$option_G,$option_H);

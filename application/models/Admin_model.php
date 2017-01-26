@@ -18,8 +18,8 @@ class Admin_model extends CI_Model
       case 'radio':
         $this->db->select('id,topic,option_A,option_B,option_C,option_D,anwser,fenzhi');
         break;
-      case 'multiple':
-        $this->db->select('id,topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H,anwser,fenzhi');
+      case 'Multiple':
+        $this->db->select('id,topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H,fenzhi,more,short,anwser,');
         break;
       default:
         $this->db->select('id,topic,anwser,fenzhi');
@@ -37,6 +37,9 @@ class Admin_model extends CI_Model
     $query = $this->db->get('college');
     return $query->result_array();
   }
+  /**
+   * 获取某个表的表头
+   */
   public function ExportDataList($value='college')
   {
     return $this->db->list_fields($value);
