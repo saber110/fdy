@@ -37,11 +37,14 @@ class Rank_model extends CI_Model
   public function Error_Rate($radio=5,$multiple=3,$TorF=2)
   {
     $sql = "select topic,option_A,option_B,option_C,option_D,anwser from radio order by (wrong_num/quoted_num) desc limit $radio";
-    $radio = $this->db->query($sql);
+    $query = $this->db->query($sql);
+    $radio = $query->result_array();
     $sql = "select  topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H,anwser from Multiple order by (wrong_num/quoted_num) desc limit $multiple";
-    $multiple = $this->db->query($sql);
+    $query = $this->db->query($sql);
+    $multiple = $query->result_array();
     $sql = "select  topic,anwser from TorF order by (wrong_num/quoted_num) desc limit $TorF";
-    $TorF = $this->db->query($sql);
+    $query = $this->db->query($sql);
+    $TorF  = $query->result_array();
     $result = array('radio' => $radio,'multiple'=>$multiple,'TorF'=>$TorF);
     return $result;
   }

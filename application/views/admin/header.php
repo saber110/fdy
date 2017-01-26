@@ -306,28 +306,36 @@
                           <a href="<?php echo site_url();?>Admin/Export"><i class="fa fa-download"></i> 数据导出</a>
                       </li>
                       <li>
-                          <a href="<?php echo site_url();?>Admin/Analyse"><i class="fa fa-list-alt"></i> 数据统计</a>
+                          <a href="#"><i class="fa fa-list-alt"></i> 数据统计<span class="fa arrow"></span></a>
+                          <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url();?>Admin/AnalyseCollege">学院情况</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url();?>Admin/AnalyseWrong">错误率</a>
+                            </li>
+                          </ul>
                       </li>
                       <li>
-                          <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                          <a href="#"><i class="fa fa-wrench fa-fw"></i>题库管理<span class="fa arrow"></span></a>
                           <ul class="nav nav-second-level">
                               <li>
-                                  <a href="panels-wells.html">Panels and Wells</a>
+                                  <a href="<?php echo site_url();?>Admin/EditDelete">单选管理</a>
                               </li>
                               <li>
-                                  <a href="buttons.html">Buttons</a>
+                                  <a href="buttons.html">多选管理</a>
                               </li>
                               <li>
-                                  <a href="notifications.html">Notifications</a>
+                                  <a href="notifications.html">填空管理</a>
                               </li>
                               <li>
-                                  <a href="typography.html">Typography</a>
+                                  <a href="typography.html">简答管理</a>
                               </li>
                               <li>
-                                  <a href="icons.html"> Icons</a>
+                                  <a href="icons.html"> 论述管理</a>
                               </li>
                               <li>
-                                  <a href="grid.html">Grid</a>
+                                  <a href="grid.html">写作管理</a>
                               </li>
                           </ul>
                           <!-- /.nav-second-level -->

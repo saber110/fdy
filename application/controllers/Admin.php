@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      parent::__construct();
      $this->load->model('Admin_model');
      $this->load->model('Exam_model');
+     $this->load->model('Rank_model');
      $this->load->library('DataOption');
      $data['user_info']['yb_userid']=7041045;
      if($this->Exam_model->Admin($data['user_info']['yb_userid'])==0)
@@ -20,7 +21,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      }
    }
 
-   public function Analyse($value='')
+   public function Getall($value='radio')
+   {
+     return $this->Admin_model->Getall($value);
+   }
+   public function AnalyseCollege($value='')
    {
      $data['all']   = $this->Admin_model->PartCollege();
      if($data['all'][9])
@@ -32,9 +37,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       $chartw .= ']';
       $chart['chart'] = $chartw;
       $this->load->view('admin/header');
-      $this->load->view('admin/analyse',$data);
-      $this->load->view('admin/footer',$chart);
+      $this->load->view('admin/AnalyseCollege',$data);
+      $this->load->view('admin/flot',$chart);
    }
+
+   public function AnalyseWrong()
+   {
+    $data['wrong'] = $this->Rank_model->Error_Rate();
+    $this->load->view('admin/header');
+    $this->load->view('admin/AnalyseWrong',$data);
+    $this->load->view('admin/footer');
+   }
+
    public function Delete($type='TorF',$id=10,$Batch_operation=FALSE)
    {
      if($Batch_operation)       //如果是批量操作
@@ -53,6 +67,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      }
    }
 
+   public function EditDelete($value='radio')
+   {
+     $reslut['lists'] = $this->Getall($value);
+     $reslut['type'] = $value;
+    //  var_dump($reslut['lists']);
+     $this->load->view('admin/header');
+     $this->load->view('admin/EditDelete',$reslut);
+     $this->load->view('admin/footer');
+   }
    public function Edit($type='radio',$id=1,$anwser  ="A",
                         $fenzhi  =2,
                         $topic   ="测试",
@@ -70,7 +93,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    {
      switch ($type) {
        case 'radio':
-         $this->Admin_model->Edit($type,$id,$anwser,$fenzhi,$option_A,$option_B,$option_C,$option_D);
+        echo $option_A;
+        //  $this->Admin_model->Edit($type,$id,$anwser,$fenzhi,$option_A,$option_B,$option_C,$option_D);
          break;
        case 'multi':
          $this->Admin_model->Edit($type,$id,$anwser,$fenzhi,$option_A,$option_B,$option_C,$option_D,$option_E,$option_F,$option_G,$option_H);

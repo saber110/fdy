@@ -10,7 +10,7 @@
   <div class="col-lg-6">
       <div class="panel panel-default">
           <div class="panel-heading">
-              全部学院参与度
+              全部学院参与度(按参与人数排名)
           </div>
           <!-- /.panel-heading -->
           <div class="panel-body">

@@ -12,6 +12,25 @@ class Admin_model extends CI_Model
     parent::__construct();
     $this->load->database();
   }
+  public function Getall($value='radio')
+  {
+    switch ($value) {
+      case 'radio':
+        $this->db->select('id,topic,option_A,option_B,option_C,option_D,anwser,fenzhi');
+        break;
+      case 'multiple':
+        $this->db->select('id,topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H,anwser,fenzhi');
+        break;
+      default:
+        $this->db->select('id,topic,anwser,fenzhi');
+        break;
+    }
+    $query = $this->db->get($value);
+    return $query->result_array();
+  }
+  /**
+   * 学院参与度
+   */
   public function PartCollege()
   {
     $this->db->order_by('staff', 'DESC');
