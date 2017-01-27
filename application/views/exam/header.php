@@ -13,8 +13,8 @@
 	<meta name="google" value="notranslate">  <!-- 禁用google翻译网页 -->
 	<meta name="robots" content="index,follow">  <!-- 网页搜索引擎方式 -->
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<title>辅导员考试学习园地开发规划</title>
+	<title>辅导员考试学习园地</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/test.css">
-	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
 </head>
 <body style="background-color:#1fc587">

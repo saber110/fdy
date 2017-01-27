@@ -1,4 +1,4 @@
-<form method="post" action='./Exam/score'>
+<form method="post" id = "question">
 	<div class="wrapper">
 	<div id="answer" class="card_wrap">
 		<?php
@@ -31,8 +31,107 @@
 			}
 
 		}
+		if(!empty($list['multi'])) {
+			foreach ($list['multi'] as $key) {
+				foreach ($key as $value) {
+					// var_dump($value);
+					$num ++;
+					echo '<div class="card_cont card'.$num.'">';
+					echo "<div class='card'>";
+					echo "<p class='question'>"."<span>Q$num </span>".$value['topic']."</p>";
+					echo "<ul class='select'>";
+					echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_1" value="A" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_1"></label><p>'.$value['option_A']."</p></div></li>";
+					echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_2" value="B" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_2"></label><p>'.$value['option_B']."</p></div></li>";
+					echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_3" value="C" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_3"></label><p>'.$value['option_C']."</p></div></li>";
+					echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_D']."</p></div></li>";
+					// echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_E']."</p></div></li>";
+					// echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_F']."</p></div></li>";
+					// echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_G']."</p></div></li>";
+					echo "</ul>";
+					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
+					echo "</div>";
+					echo "</div>";
+				}
+			}
+
+		}
+		if(!empty($list['TorF'])) {
+			foreach ($list['TorF'] as $key) {
+				foreach ($key as $value) {
+					// var_dump($value);
+					$num ++;
+					echo '<div class="card_cont card'.$num.'">';
+					echo "<div class='card'>";
+					echo "<p class='question'>"."<span>Q$num </span>填空题</p>";
+					echo "<ul class='select'>";
+					echo '<li>'.$value['topic'].'</li><br><br><br><br><br>';
+					echo '<li><input type="text" placeholder="填空答案" name="myblank"></li>';
+					//'.'<input id="q'.$num.'_1" type="checkbox" value="A" name="myradio'.$value["id"].'">'.'<label for="q'.$num.'_1">'.$value['option_A']."</label>
+					echo "</ul>";
+					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
+					echo "</div>";
+					echo "</div>";
+				}
+			}
+
+		}
+		if(!empty($list['short'])) {
+			foreach ($list['short'] as $value) {		//若多个题目,则将value改为key
+				foreach ($key as $value) {
+					// var_dump($value);
+					$num ++;
+					echo '<div class="card_cont card'.$num.'">';
+					echo "<div class='card'>";
+					echo "<p class='question'>"."<span>Q$num </span>简答题</p>";
+					echo "<ul class='select'>";
+					echo '<li>'.$value['topic'].'</li><br><br><br><br><br>';
+					//'.'<input id="q'.$num.'_1" type="checkbox" value="A" name="myradio'.$value["id"].'">'.'<label for="q'.$num.'_1">'.$value['option_A']."</label>
+					echo "</ul>";
+					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
+					echo "</div>";
+					echo "</div>";
+				}
+			}
+
+		}
+		if(!empty($list['disc'])) {
+			foreach ($list['disc'] as $value) {		//若多个题目,则将value改为key
+				foreach ($key as $value) {
+					// var_dump($value);
+					$num ++;
+					echo '<div class="card_cont card'.$num.'">';
+					echo "<div class='card'>";
+					echo "<p class='question'>"."<span>Q$num </span>论述题</p>";
+					echo "<ul class='select'>";
+					echo '<li>'.$value['topic'].'</li><br><br><br><br><br>';
+					echo "</ul>";
+					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
+					echo "</div>";
+					echo "</div>";
+				}
+			}
+
+		}
+		if(!empty($list['writ'])) {
+			foreach ($list['writ'] as $value) {			//若多个题目,则将value改为key
+				foreach ($key as $value) {
+					// var_dump($value);
+					$num ++;
+					echo '<div class="card_cont card'.$num.'">';
+					echo "<div class='card'>";
+					echo "<p class='question'>"."<span>Q$num </span>写作题</p>";
+					echo "<ul class='select'>";
+					echo '<li>'.$value['topic'].'</li><br><br><br><br><br>';
+					echo '<li><div class="test_btn"><button class="btn">提交</button></div></li>';
+					echo "</ul>";
+					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
+					echo "</div>";
+					echo "</div>";
+				}
+			}
+
+		}
 		?>
 	</div><!--/card_wrap-->
 </div>
-<input onclick="score()" type="text" value="提交">
 </form>

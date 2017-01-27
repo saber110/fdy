@@ -19,9 +19,10 @@ class Exam_model extends CI_Model
                                     $yb_username="胡皓斌",
                                     $name = "胡皓斌",
                                     $college = "物电院",
+                                    $score=0,
                                     $phone = 15675123342,
-                                    $email = "huhaobin110@gmail.com",
-                                    $score=0)
+                                    $email = "huhaobin110@gmail.com"
+                                    )
   {
     $this->db->select('most_score');
     $query = $this->db->get_where('examination',array('yb_userid'=>$yb_userid));
@@ -52,15 +53,15 @@ class Exam_model extends CI_Model
     $this->db->select_max('most_score');
     $this->db->where('college',$college);
     $query = $this->db->get('examination');
-    $score = $query->result_array()['most_score'];
+    $score = $query->result_array()[0]['most_score'];
 
     $this->db->select('exam_num');
     $query = $this->db->get_where('college',array('college' => $college));
-    $NumOld = $query->result_array()['exam_num'];
+    $NumOld = $query->result_array()[0]['exam_num'];
 
     $data = array(
-      'stuff' => $stuff,
-      'score' => $score,
+      'staff'    => $stuff,
+      'score'    => $score,
       'exam_num' => ($NumOld+1)
     );
     $this->db->where('college',$college);
@@ -193,36 +194,36 @@ class Exam_model extends CI_Model
       $RadioRes[$RadioNum++] = $query->result_array();
     }
     $MultiNum = 0;
-    // foreach ($para['multiple'] as $id) {
-    //   $this->db->select('id,topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H');
-    //   $query = $this->db->get_where('Multiple',array('id'=>$id));
-    //   $MultiRes[$MultiNum++] = $query->result_array();
-    // }
-    // $TorFNum = 0;
-    // foreach ($para['TorF'] as $id) {
-    //   $this->db->select('id,topic');
-    //   $query = $this->db->get_where('TorF',array('id'=>$id));
-    //   $TorFRes[$TorFNum++] = $query->result_array();
-    // }
-    //
-    // $this->db->select('id,topic');
-    // $query = $this->db->get_where('Short_answer',array('id'=>$para['short'][0]));
-    // $ShortRes = $query->result_array();
-    //
-    // $this->db->select('id,topic');
-    // $query = $this->db->get_where('Discussion',array('id'=>$para['disc'][0]));
-    // $DiscRes = $query->result_array();
-    //
-    // $this->db->select('id,topic');
-    // $query = $this->db->get_where('writing',array('id'=>$para['writing'][0]));
-    // $writingRes = $query->result_array();
+    foreach ($para['multiple'] as $id) {
+      $this->db->select('id,topic,option_A,option_B,option_C,option_D,option_E,option_F,option_G,option_H');
+      $query = $this->db->get_where('Multiple',array('id'=>$id));
+      $MultiRes[$MultiNum++] = $query->result_array();
+    }
+    $TorFNum = 0;
+    foreach ($para['TorF'] as $id) {
+      $this->db->select('id,topic');
+      $query = $this->db->get_where('TorF',array('id'=>$id));
+      $TorFRes[$TorFNum++] = $query->result_array();
+    }
+
+    $this->db->select('id,topic');
+    $query = $this->db->get_where('Short_answer',array('id'=>$para['short'][0]));
+    $ShortRes = $query->result_array();
+
+    $this->db->select('id,topic');
+    $query = $this->db->get_where('Discussion',array('id'=>$para['disc'][0]));
+    $DiscRes = $query->result_array();
+
+    $this->db->select('id,topic');
+    $query = $this->db->get_where('writing',array('id'=>$para['writing'][0]));
+    $writingRes = $query->result_array();
     return array(
-      'radio'=>$RadioRes
-      // 'multi'=>$MultiRes,
-      // 'TorF' =>$TorFRes,
-      // 'short'=>$ShortRes,
-      // 'disc' =>$DiscRes,
-      // 'writ' =>$writingRes
+      'radio'=>$RadioRes,
+      'multi'=>$MultiRes,
+      'TorF' =>$TorFRes,
+      'short'=>$ShortRes,
+      'disc' =>$DiscRes,
+      'writ' =>$writingRes
     );
   }
 
@@ -247,40 +248,28 @@ class Exam_model extends CI_Model
       {
         $MultiId[$multi_num++]=$value;
       }
-      elseif($num < ($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum'] + $this->TorFNum()['TorFNum'] ))
-      {
-        $TorFId[$TorFnum++]=$value;
-      }
+      // elseif($num < ($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum'] + $this->TorFNum()['TorFNum'] ))
+      // {
+      //   $TorFId[$TorFnum++]=$value;
+      // }
       $num ++;
     }
     return array(
       'RadioId' => $RadioId,
-      'MultiId' => $MultiId,
-      'TorFId'  => $TorFId
+      'MultiId' => $MultiId
+      // 'TorFId'  => $TorFId
     );
   }
   public function GetScore($id,$anwser)
   {
     $InputId = $this->RScore($id,$anwser);
     $_anwser = array_combine($id,$anwser);
-      // var_dump($id);
-      // echo "<br \>";
-    // var_dump($this->RScore($id,$anwser));echo "<br \>";
     $score = 0;
     $xu_id = 0;
 
       //单选
       $num = 0;   //标志答案次序
       foreach ($InputId['RadioId'] as $value) {
-        // echo "RadioNum";
-        // var_dump($this->RadioNum()['RadioNum']);
-        // if (($num+1) > $this->RadioNum()['RadioNum'] || $this->RadioNum()['RadioNum'] == 0) {
-        //   // echo 'num_break'.$num."<br \>";
-        //   break;
-        // }
-        // echo 'num'.$num."<br \>";
-        // var_dump("单选");
-
         $this->db->select('fenzhi');
         $query = $this->db->get_where('radio',array('id'=>$value,'anwser'=>$anwser[$num]));
         if($query->num_rows() > 0)
@@ -289,48 +278,24 @@ class Exam_model extends CI_Model
         }
         else
         {
-          // var_dump($anwser[$num]);
           $wrong['Radio'.$value] = $anwser[$num];
         }
         $num ++;
       }
-      echo '单选'.$xu_id.'成绩'.$score.'总数'.$this->RadioNum()['RadioNum'].'<br \>';
-
-
-  //   elseif($xu_id < ($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum']))
-  //   {
-  //     //多选
-  //     echo "多选 ".$xu_id."多选总数".($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum'])."<br \>";
-  //     $num = 0;
-  //     for ($i=$xu_id; $i < ($this->MultiNum()['MultiNum'] + $num_multi); $i++) {
-  //       echo "多选 ".$xu_id.' id '.$i."<br \>".'anwser'."<br \>";
-  //       var_dump($anwser[$i]);echo "<br \>";
-  //       $temp[$i - $xu_id] = implode('',$anwser[$i]);
-  //     }
-  //     echo "temp";
-      // var_dump($InputId['MultiId'] );
+      // echo '单选'.$xu_id.'成绩'.$score.'总数'.$this->RadioNum()['RadioNum'].'<br \>';
       foreach ($InputId['MultiId'] as $value)
       {
-
-        // if ($num >= $this->MultiNum()['MultiNum'] || $this->MultiNum()['MultiNum'] == 0) {
-        //   break;
-        // }
-        echo '多选id'.$value."<br \>"."填写答案 ";var_dump(implode('',$anwser[$num]));echo "<br \>";
-
         $this->db->select('fenzhi');
         $query = $this->db->get_where('Multiple',array('id'=>$value,'anwser'=>implode('',$anwser[$num])));
         if($query->num_rows() > 0)  //答案正确
         {
             $score = $score + $this->GetFenzhi($value,'Multiple')['fenzhi'];
-            echo "多选答案正确 ".$score."<br \>";
+            // echo "多选答案正确 ".$score."<br \>";
         }
         else        //答案多选
         {
           $this->db->select('id,anwser');
           $query = $this->db->get_where('Multiple',array('id'=>$value));
-          // echo $num."<br \>";
-          // var_dump(($query->row_array()['anwser']));
-          // var_dump(strlen($temp[$num]));
           if(strlen($query->row_array()['anwser']) < strlen(implode('',$anwser[$num])))
           {
             $score = $score + $this->GetFenzhi($value,'Multiple','more')['more'];
@@ -338,26 +303,21 @@ class Exam_model extends CI_Model
           else        //答案少选
           {
             $cuoxuan = 0;   //错选标志
-            var_dump($_anwser[$value] );
             foreach ($_anwser[$value] as $key)
             {
-              // var_dump($key);
-              // echo $value."<br \>";
               $this->db->select('anwser');
               $query = $this->db->get_where('Multiple',array('id'=>$value));
-              echo 'id '.$value.'答案 '.$key."<br \>";
-              var_dump(!strpos($query->row_array()['anwser'],$key));
               if(strpos($query->row_array()['anwser'],$key)===FALSE)  //答案错选
               {
                 $cuoxuan = 1;
-                echo "错选 ";
+                // echo "错选 ";
               }
-              echo $cuoxuan."<br \>";
+              // echo $cuoxuan."<br \>";
             }
             if(!$cuoxuan)
             {
               $score = $score + $this->GetFenzhi($value,'Multiple','short')['short'];
-              echo "少选";
+              // echo "少选";
             }
             else
             {
@@ -367,40 +327,32 @@ class Exam_model extends CI_Model
         }
         $num ++;
       }
-  //   }
-  //   elseif($xu_id < ($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum'] + $this->TorFNum()['TorFNum']))
-  //   {
-  //     //判断
-  //     // var_dump($_anwser);
-      echo "判断<br \>";
-  //     $num = 0;
-      foreach ($InputId['TorFId'] as $value) {
-        // if ($num >= $this->TorFNum()['TorFNum'] || $this->TorFNum()['TorFNum'] == 0) {
-        //   break;
-        // }
-        // var_dump($value);
-        // var_dump($anwser[$num]);
-        echo "判断id ".$value."对应答案".$anwser[$num]."<br \>";
-        $this->db->select('fenzhi');
-        $query = $this->db->get_where('TorF',array('id'=>$value,'anwser'=>$anwser[$num]));
-        if ($query->num_rows() > 0) {
-          $score = $score + $this->GetFenzhi($value,'TorF')['fenzhi'];
-          // var_dump("n");
-        }
-        else
-        {
-          $wrong['TorF'.$value] = $anwser[$num];
-        }
-        $num ++;
-      }
-  //   }
-  //   else {
-  //     echo "break ".$xu_id."<br \>";
-  //     break;
-  //   }
-  //   // $xu_id ++;
-  // // }
-return array('score'=>$score/*,'wrong'=>$wrong*/);
+      /**
+       * 判断题答案盯对
+       */
+    // elseif($xu_id < ($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum'] + $this->TorFNum()['TorFNum']))
+    // {
+    //   //判断
+    //   foreach ($InputId['TorFId'] as $value) {
+    //     echo "判断id ".$value."对应答案".$anwser[$num]."<br \>";
+    //     $this->db->select('fenzhi');
+    //     $query = $this->db->get_where('TorF',array('id'=>$value,'anwser'=>$anwser[$num]));
+    //     if ($query->num_rows() > 0) {
+    //       $score = $score + $this->GetFenzhi($value,'TorF')['fenzhi'];
+    //       // var_dump("n");
+    //     }
+    //     else
+    //     {
+    //       $wrong['TorF'.$value] = $anwser[$num];
+    //     }
+    //     $num ++;
+    //   }
+    // }
+    // else {
+    //   echo "break ".$xu_id."<br \>";
+    //   break;
+    // }
+  return array('score'=>$score,'wrong'=>$wrong);
   }
 
   public function InsertScore(

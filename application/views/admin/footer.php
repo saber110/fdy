@@ -26,31 +26,10 @@ function  submit(status)
   var daan = document.getElementsByTagName('input')[7].value;
   var fen = document.getElementsByTagName('input')[8].value;
   var type = "<?php echo $type; ?>";
-  $.post("Edit",{ type: type,id:id,title: title,a:a,b:b,c:c,d:d,daan:daan,fen:fen},function (result) {
+  $.post("../Edit",{ type: type,id:id,title: title,a:a,b:b,c:c,d:d,daan:daan,fen:fen},function (result) {
     location.reload(true);
   }
   )
-  // var jsonds = {};
-  // var jsond = {};
-  // jsond["title"] = title;
-  // jsond["a"]     = a;
-  // jsond["b"]     = b;
-  // jsond["c"]     = c;
-  // jsond["d"]     = d;
-  // jsond["daan"]  = daan;
-  // jsond["fen"]   = fen;
-  // jsonds.push(jsond);
-  // var jsonString = JSON.stringify(jsonds);
-  // console.log(jsonString);
-  // $.get("Edit/radio/"+status+"/"+daan+"/"+fen+"/"+(a)+"/"+b+"/"+c+"/"+d, function(data){
-  //   alert(data);
-	// 	// ret = $.parseJSON(data);
-	// 	// $deal_id = ret.status;
-	// 	// if(ret.msg != 1)
-	// 	// $("#"+$deal_id).html('是');
-	// 	// else
-	// 	// 	alert("更新失败，请重试");
-	// })
 }
 </script>
 

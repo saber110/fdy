@@ -487,7 +487,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              // var_dump($str);
              $sql = array(
                  'topic' => $strs[0],
-                 'answer' => $strs[1],
+                 'anwser' => $strs[1],
                  'fenzhi' => $strs[2]
                  );
              // var_dump($sql);
@@ -546,7 +546,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              // var_dump($str);
              $sql = array(
                  'topic'  => $strs[0],
-                 'answer' => $strs[1],
+                 'anwser' => $strs[1],
                  'fenzhi' => $strs[2]
                  );
              // var_dump($sql);

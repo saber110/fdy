@@ -2,7 +2,7 @@
  * CSS3 答题卡翻页效果 jQuery Transit
  * @authors Candice <286556658@qq.com>
  * @date    2016-9-27 15:30:18
- * @version 1.0.8
+ * @version 1.0.9
  */
 $.fn.answerSheet = function(options) {
     var defaults = {
@@ -23,7 +23,7 @@ $.fn.answerSheet = function(options) {
         }
         $(this).show();
         if (opts.mold == 'card') {
-            obj.find('ul li label').click(function() {
+            obj.find('input[type=radio]').click(function() {
                 var _idx = $(this).parents(_cont).index(),
                     _cards = obj,
                     _cardcont = $(this).parents(_cont);
@@ -50,6 +50,20 @@ $.fn.answerSheet = function(options) {
                 setTimeout(function() {
                     obj.eq(_idx - 1).addClass('card1').removeClass('cardn');
                 }, 200);
+            });
+            $('.card_bottom').find('.next').click(function() {
+                var _idx = $(this).parents(_cont).index(),
+                    _cards = obj,
+                    _cardcont = $(this).parents(_cont);
+                setTimeout(function() {
+                    _cardcont.addClass('cardn');
+                    setTimeout(function() {
+                        _cards.eq(_idx + 3).addClass('card3');
+                        _cards.eq(_idx + 2).removeClass('card3').addClass('card2');
+                        _cards.eq(_idx + 1).removeClass('card2').addClass('card1');
+                        _cardcont.removeClass('card1');
+                    }, 200);
+                }, 100);
             })
         }
     });

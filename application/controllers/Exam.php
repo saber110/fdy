@@ -66,12 +66,18 @@ class Exam extends CI_Controller
     //
     //
     $this->data['user_info']['yb_userid'] = 7041045;
+    $this->data['user_info']['yb_username'] = '胡皓斌';
+    $this->data['user_info']['yb_realname'] = '胡皓斌';
     if($this->Someone($this->data['user_info']['yb_userid'])===0)
     {
       $this->CreateTable($this->data['user_info']['yb_userid']);
     }
   }
 
+  public function nihao($value='')
+  {
+    var_dump($this->Extracts());
+  }
   public function UpdateCollege($value='')
   {
     var_dump($this->Exam_model->UpdateCollege());
@@ -95,7 +101,7 @@ class Exam extends CI_Controller
   * $min 和 $max: 指定随机数的范围
   * $num: 指定生成数量
   */
-  public function unique_rand($max, $num=1,$min=0) {
+  public function unique_rand($max, $num=1,$min=1) {
       $count = 0;
       $return = array();
       while ($count < $num) {
@@ -117,13 +123,13 @@ class Exam extends CI_Controller
     $TorF=$this->Exam_model->TorFNum()['TorFNum'];
     // echo $radio."<br \>".$multiple."<br \>".$TorF;
     $radio = $this->unique_rand($this->Exam_model->RadioSum(),$radio);
-    // $multi = $this->unique_rand($this->Exam_model->MultiSum(),$multiple);
-    // $TF    = $this->unique_rand($this->Exam_model->TorFSum() ,$TorF);
-    // $short = $this->unique_rand($this->Exam_model->ShortSum());
-    // $disc  = $this->unique_rand($this->Exam_model->DissSum());
-    // $writing = $this->unique_rand($this->Exam_model->WritingSum());\
+    $multi = $this->unique_rand($this->Exam_model->MultiSum(),$multiple);
+    $TF    = $this->unique_rand($this->Exam_model->TorFSum() ,$TorF);
+    $short = $this->unique_rand($this->Exam_model->ShortSum());
+    $disc  = $this->unique_rand($this->Exam_model->DissSum());
+    $writing = $this->unique_rand($this->Exam_model->WritingSum());
     //下句仅供测试使用
-    $multi = $TF = $short = $disc = $writing ='';
+    // $multi = $TF = $short = $disc = $writing ='';
     $result = array('radio' => $radio,'multiple'=>$multi,'TorF'=>$TF,'short'=>$short,'disc'=>$disc,'writing'=>$writing);
     return $result;
   }
@@ -141,25 +147,22 @@ class Exam extends CI_Controller
 
   public function score()
   {
-    var_dump($this->input->post());
-    exit;
     $RadioDeal = str_replace('myradio','',array_keys($this->input->post()));
     $MultiDeal = str_replace('mycheckbox','',($RadioDeal));
     $TorFDeal  = str_replace('myTorF','',($MultiDeal));
-    // var_dump($RadioDeal);
-    // echo "<br \>";
-    // var_dump($MultiDeal);echo "<br \>";
-    // var_dump($TorFDeal);echo "<br \>";
-    // var_dump(json_encode($this->input->post()));
-    // print_r($this->Exam_model->RScore(array_values($TorFDeal),array_values($this->input->post())));
-    echo "成绩".$this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()))['score'];
-    echo $this->Exam_model->InsertScore($this->data['user_info']['yb_userid'],
-                                   $this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()))['score'],
+    $result = $this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()));
+    $this->Exam_model->InsertScore($this->data['user_info']['yb_userid'],
+                                   $result['score'],
                                    json_encode($this->input->post()),
-                                   json_encode($this->Exam_model->GetScore(array_values($TorFDeal),array_values($this->input->post()))['wrong'])
+                                   json_encode($result['wrong'])
                                  );
-    $this->Exam_model->UpdateExamination();           //记得填入参数
+    $this->Exam_model->UpdateExamination($this->data['user_info']['yb_userid'],
+                                         $this->data['user_info']['yb_username'],
+                                         $this->data['user_info']['yb_realname'],
+                                         '物理院',
+                                         $result['score']
+                                         );           //记得填入参数
     $this->Exam_model->UpdateCollege();
-
+    echo $result['score'];
   }
 }
