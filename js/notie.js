@@ -365,21 +365,26 @@ var notie = function(){
     var confirm_inner = document.createElement('div');
     confirm_inner.id = confirm_inner_id;
     confirm_inner.style.boxSizing = 'border-box';
+    confirm_inner.style.height = '150px';
     confirm_inner.style.width = '100%';
-    confirm_inner.style.padding = '20px';
+    confirm_inner.style.padding = '40px';
     confirm_inner.style.display = 'block';
     confirm_inner.style.cursor = 'default';
     confirm_inner.style.backgroundColor = confirm_and_input_color_background;
     confirm_outer.appendChild(confirm_inner);
 
-    var confirm_yes = document.createElement('div');
+    var confirm_yes = document.createElement('a');
     confirm_yes.id = confirm_yes_id;
+    confirm_yes.setAttribute("class","show-layer");
+    confirm_yes.setAttribute("data-show-layer","hw-layer");
+    confirm_yes.setAttribute("role","button");
     confirm_yes.style.cssFloat = 'left';
     confirm_yes.style.height = '50px';
     confirm_yes.style.lineHeight = '50px';
     confirm_yes.style.width = '50%';
     confirm_yes.style.cursor = 'pointer';
     confirm_yes.style.backgroundColor = confirm_and_input_color_yes_background;
+/*    confirm_yes.onclick = False();*/
     confirm_outer.appendChild(confirm_yes);
 
     var confirm_no = document.createElement('div');
@@ -397,7 +402,7 @@ var notie = function(){
     var confirm_text = document.createElement('span');
     confirm_text.id = confirm_text_id;
     confirm_text.style.color = confirm_and_input_color_text;
-    if (window.innerWidth <= font_change_screen_width) { confirm_text.style.fontSize = font_size_small; }
+    if (window.innerWidth <= font_change_screen_width) { confirm_text.style.fontSize = '20px'; }
     else { confirm_text.style.fontSize = font_size_big; }
     window.addEventListener('resize', debounce(resizeListener.bind(null, confirm_text), debounce_time), true);
     confirm_inner.appendChild(confirm_text);
@@ -426,7 +431,7 @@ var notie = function(){
     var confirm_height = 0;
     var confirm_is_showing = false;
 
-    function confirm(title, yes_text, no_text, yes_callback) {
+    function confirm(title, yes_text, no_text) {
         
         // Blur active element for use of enter key
         document.activeElement.blur();
@@ -436,25 +441,25 @@ var notie = function(){
             clearTimeout(alert_timeout_1);
             clearTimeout(alert_timeout_2);
             alert_hide(function() {
-                confirm_show(title, yes_text, no_text, yes_callback);
+                confirm_show(title, yes_text, no_text);
             });
         }
         else {
-            confirm_show(title, yes_text, no_text, yes_callback);
+            confirm_show(title, yes_text, no_text);
         }
         
 
     }
-    function confirm_show(title, yes_text, no_text, yes_callback) {
+    function confirm_show(title, yes_text, no_text) {
 
         scroll_disable();
 
         // Yes callback function
         confirm_yes.onclick = function() {
             confirm_hide();
-            setTimeout(function() {
+            /*setTimeout(function() {
                 yes_callback();
-            }, (animation_delay * 1000 + 10));
+            }, (animation_delay * 1000 + 10));*/
         }
 
         function confirm_show_inner() {
@@ -533,7 +538,7 @@ var notie = function(){
     var input_outer = document.createElement('div');
     input_outer.id = input_outer_id;
     input_outer.style.position = 'fixed';
-    input_outer.style.top = '0';
+    input_outer.style.bottom = '0';
     input_outer.style.left = '0';
     input_outer.style.zIndex = '999999998';
     input_outer.style.height = 'auto';
@@ -547,7 +552,7 @@ var notie = function(){
     var input_background = document.createElement('div');
     input_background.id = input_background_id;
     input_background.style.position = 'fixed';
-    input_background.style.top = '0';
+    input_background.style.bottom = '0';
     input_background.style.left = '0';
     input_background.style.zIndex = '999999997';
     input_background.style.height = '100%';
@@ -776,3 +781,49 @@ var notie = function(){
 if (typeof module !== 'undefined' && module) {
     module.exports = notie;
 }
+
+
+
+/* 弹出 */
+
+    
+    //展示层
+    function showLayer(id){
+        var layer = $('#'+id),
+        layerwrap = layer.find('.hw-layer-wrap');
+        layer.fadeIn();
+
+        //屏幕居中
+        //layerwrap.css({
+        //  'margin-top': -layerwrap.outerHeight()/2
+        //});
+    }
+
+    //隐藏层
+    function hideLayer(){
+        $('.hw-overlay').fadeOut();
+    }
+
+    $('.hwLayer-ok,.hwLayer-cancel,.hwLayer-close').on('click', function() {
+        hideLayer();
+    });
+
+    //触发弹出层
+    $('.show-layer').on('click',  function() {      
+        var layerid = $(this).data('show-layer');
+        showLayer(layerid);
+    });
+
+    //点击或者触控弹出层外的半透明遮罩层，关闭弹出层
+    $('.hw-overlay').on('click',  function(event) {
+        if (event.target == this){
+            hideLayer();
+        }
+    });
+
+    //按ESC键关闭弹出层
+    $(document).keyup(function(event) {
+        if (event.keyCode == 27) {
+            hideLayer();
+        }
+    });
