@@ -1,6 +1,6 @@
 
 	<script src="<?php echo base_url(); ?>js/notie.js"></script>
-	<script src="<?php echo base_url(); ?>js/jquery-1.8.3.min.js"></script>
+	<script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
 	<script>
 	$("#question").submit(function(e) {
 
@@ -10,26 +10,25 @@
            type: "POST",
            url: url,
            data: $("#question").serialize(),
-           success: function(data)
+           success: function confirm(data)
            {
-						 notie.confirm('你的此次考试成绩为：<strong>'+data+'分</strong>', 'Yes', 'Cancel', function() {
-							notie.alert(1, 'Good Job!', 2);
-						});
+				notie.confirm('你的此次考试成绩为：<br/><br/><strong>'+data+'分！</strong>', '分享', 'Cancel');
            },
-					 error: function(){
-						 notie.confirm('出错了,请重新提交','好的','重试');
-					 }
+		   error: function del(){
+				notie.alert(3, '出错了，请重新提交.', 2);
+			}
          });
 
     e.preventDefault();
 });
 </script>
 
+<script src="<?php echo base_url(); ?>js/jquery-1.8.3.min.js"></script>
 <script src="<?php echo base_url(); ?>js/answer.js"></script>
 <script>
-$(function(){
-	$("#answer").answerSheet({});
-})
+	$(function(){
+		$("#answer").answerSheet({});
+	})
 </script>
 
 </body>
