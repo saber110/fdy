@@ -140,14 +140,14 @@
 			<h6><img src="images/test_fx.png" alt=""><span>分享到	</span></h6>
 			<div class="test_bottom">
 				<ul>
-					<li><div><a href="#"><img src="images/test_wb.png" alt=""></a><p>新浪微博</p></div></li>
-					<li><div><a href="#"><img src="images/test_qq.png" alt=""></a><p>QQ好友</p></div></li>
-					<li><div><a href="#"><img src="images/test_wx.png" alt=""></a><p>微信好友</p></div></li>
-					<li><div><a href="#"><img src="images/test_pyq.png" alt=""></a><p>朋友圈</p></div></li>
-					<li><div><a href="#"><img src="images/test_kj.png" alt=""></a><p>QQ空间</p></div></li>
-					<li><div><a href="#"><img src="images/test_twb.png" alt=""></a><p>腾讯微博</p></div></li>
-					<li><div><a href="#"><img src="images/test_yb.png" alt=""></a><p>易班</p></div></li>
-					<li><div><a href="#"><img src="images/test_fz.png" alt=""></a><p>复制链接</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_wb.png" alt=""></a><p>新浪微博</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_qq.png" alt=""></a><p>QQ好友</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_wx.png" alt=""></a><p>微信好友</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_pyq.png" alt=""></a><p>朋友圈</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_kj.png" alt=""></a><p>QQ空间</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_twb.png" alt=""></a><p>腾讯微博</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_yb.png" alt=""></a><p>易班</p></div></li>
+					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_fz.png" alt=""></a><p>复制链接</p></div></li>
 				</ul>
 			</div>
 		</div>
