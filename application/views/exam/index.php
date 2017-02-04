@@ -139,9 +139,14 @@
 	<div class="social-share" data-initialized="true">
 	<div class="hw-overlay" id="hw-layer">
 		<div class="hw-layer-wrap">
-			<h6><img src="images/test_fx.png" alt=""><span>分享到	</span></h6>
+			<h6><img src="<?php echo base_url()?>images/test_fx.png" alt=""><span>分享到	</span></h6>
 			<div class="test_bottom">
 				<ul>
+					<li><div class="social-share" data-sites="weibo"></div></li>
+					<li><div class="social-share" data-sites="qq"></div></li>
+					<li><div class="social-share" data-sites="qzone"></div></li>
+					<li><div class="social-share" data-sites="tencent"></div></li>
+					<li><div class="social-share" data-sites="wechat"></div></li>
 				</ul>
 			</div>
 		</div>

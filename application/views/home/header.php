@@ -15,6 +15,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<title>辅导员考试学习园地</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/Test_home.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/test.css">
 </head>
 <body>
 	<div class="body">

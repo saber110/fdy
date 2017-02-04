@@ -13,12 +13,12 @@
 	<meta name="google" value="notranslate">  <!-- 禁用google翻译网页 -->
 	<meta name="robots" content="index,follow">  <!-- 网页搜索引擎方式 -->
 	<title>排行榜</title>
-	<link rel="stylesheet" href="css/Test_bang.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/Test_bang.css">
 </head>
 <body>
 	<div class="body">
 		<div class="header-left">
-			<a class="show-layer" onclick="False-1()" data-show-layer="hw-layer" role="button">学院排行榜</a>	
+			<a class="show-layer" onclick="False-1()" data-show-layer="hw-layer" role="button">学院排行榜</a>
 		</div>
 		<div class="header-right">
 			<a class="show-layer" onclick="False-2()" data-show-layer="hw-layer" role="button">个人排行榜</a>

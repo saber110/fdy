@@ -41,23 +41,18 @@ class Rank extends CI_Controller
    //勤奋榜
    public function Diligence_list()
    {
-     $data = $this->Rank_model->Diligence_list(10);
-     var_dump($data);
-     /*
-     $this->load->view('rank/diligence/header');
-     $this->load->view('rank/diligence/index',$data);
-     $this->load->view('rank/diligence/footer');
-     */
+     $data['lists'] = $this->Rank_model->Diligence_list(10);
+    //  var_dump($data['lists']);
+     $this->load->view('rank/header');
+     $this->load->view('rank/diligence',$data);
+     $this->load->view('rank/footer');
    }
 
    public function Error_Rate()
    {
-     $data = $this->Rank_model->Error_Rate();
-     var_dump($data);
-     /*
-     $this->load->view('rank/error_rate/header');
-     $this->load->view('rank/error_rate/index',$data);
-     $this->load->view('rank/error_rate/footer');
-     */
+     $data['wrong'] = $this->Rank_model->Error_Rate();
+     $this->load->view('rank/header');
+     $this->load->view('rank/wrong',$data);
+     $this->load->view('rank/footer');
    }
 }

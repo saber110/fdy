@@ -8,7 +8,7 @@
 	<script>
 	$("#question").submit(function(e) {
 
-    var url = "Exam/score";
+    var url = "<?php echo base_url()?>Exam/score";
 
     $.ajax({
            type: "POST",

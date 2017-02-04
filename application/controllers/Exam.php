@@ -73,9 +73,11 @@ class Exam extends CI_Controller
         }
     }
 
-    public function nihao($value = '')
+    public function index($value='')
     {
-        var_dump($this->Extracts());
+      $this->load->view('home/header');
+      $this->load->view('home/index');
+      $this->load->view('home/footer');
     }
     public function UpdateCollege($value = '')
     {
@@ -137,7 +139,7 @@ class Exam extends CI_Controller
       return $result;
   }
 
-    public function index()
+    public function exam()
     {
         $data['list'] = $this->Exam_model->ReadTopic($this->Extracts());
         $data['number'] = $this->Exam_model->RadioNum()['RadioNum'];
