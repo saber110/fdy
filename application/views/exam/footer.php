@@ -1,4 +1,8 @@
-	<script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
+	<!-- <script src="<?php echo base_url(); ?>js/jquery-1.8.3.min.js"></script> -->
+	<script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.js"></script>
+<!-- share.js -->
+<script src="<?php echo base_url(); ?>js/jquery.share.min.js"></script>
+
 	<script src="<?php echo base_url(); ?>js/notie.js"></script>
 
 	<script>
@@ -22,8 +26,6 @@
     e.preventDefault();
 });
 </script>
-
-<script src="<?php echo base_url(); ?>js/jquery-1.8.3.min.js"></script>
 <script src="<?php echo base_url(); ?>js/answer.js"></script>
 <script>
 	$(function(){

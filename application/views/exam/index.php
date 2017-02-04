@@ -1,6 +1,7 @@
 <form method="post" id = "question">
 	<div class="wrapper">
 	<div id="answer" class="card_wrap">
+
 		<?php
 		if(!empty($list['radio'])) {
 			$num = 0;
@@ -135,23 +136,21 @@
 	</div><!--/card_wrap-->
 
 	<!--  分享页面  -->
+	<div class="social-share" data-initialized="true">
 	<div class="hw-overlay" id="hw-layer">
 		<div class="hw-layer-wrap">
 			<h6><img src="images/test_fx.png" alt=""><span>分享到	</span></h6>
 			<div class="test_bottom">
 				<ul>
-					<li><div><a href="http://v.t.sina.com.cn/share/share.php?title=我在中南易班参加辅导员考试考了++分" target="_self"><img src="images/test_wb.png" alt=""></a><p>新浪微博</p></div></li>
-					<li><div><a href="#"><img src="images/test_qq.png" alt=""></a><p>QQ好友</p></div></li>
-					<li><div><a href="#"><img src="images/test_wx.png" alt=""></a><p>微信好友</p></div></li>
-					<li><div><a href="#"><img src="images/test_pyq.png" alt=""></a><p>朋友圈</p></div></li>
-					<li><div><a href="#"><img src="images/test_kj.png" alt=""></a><p>QQ空间</p></div></li>
-					<li><div><a href="#"><img src="images/test_twb.png" alt=""></a><p>腾讯微博</p></div></li>
-					<li><div><a href="#"><img src="images/test_yb.png" alt=""></a><p>易班</p></div></li>
-					<li><div><a href="#"><img src="images/test_fz.png" alt=""></a><p>复制链接</p></div></li>
+					<li><div class="social-share" data-sites="weibo"></div></li>
+					<li><div class="social-share" data-sites="qq"></div></li>
+					<li><div class="social-share" data-sites="qzone"></div></li>
+					<li><div class="social-share" data-sites="tencent"></div></li>
+					<li><div class="social-share" data-sites="wechat"></div></li>
 				</ul>
 			</div>
 		</div>
 	</div>
-
+</div>
 </div>
 </form>
