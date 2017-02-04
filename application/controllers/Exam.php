@@ -141,11 +141,11 @@ class Exam extends CI_Controller
     {
         $data['list'] = $this->Exam_model->ReadTopic($this->Extracts());
         $data['number'] = $this->Exam_model->RadioNum()['RadioNum'];
-    // var_dump($data['list']);
-    $this->load->view('exam/header');
+        // var_dump($data['list']);
+        $this->load->view('exam/header');
         $this->load->view('exam/index', $data);
         $this->load->view('exam/footer');
-    // var_dump($data);
+        // var_dump($data);
     }
 
     public function score()
