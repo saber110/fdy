@@ -1,6 +1,6 @@
-
-	<script src="<?php echo base_url(); ?>js/notie.js"></script>
 	<script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
+	<script src="<?php echo base_url(); ?>js/notie.js"></script>
+
 	<script>
 	$("#question").submit(function(e) {
 

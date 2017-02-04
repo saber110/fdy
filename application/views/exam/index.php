@@ -122,7 +122,7 @@
 					echo "<p class='question'>"."<span>Q$num </span>写作题</p>";
 					echo "<ul class='select'>";
 					echo '<li>'.$value['topic'].'</li><br><br><br><br><br>';
-					echo '<li><div class="test_btn"<a class="test_a" onclick="confirm();">提交</a></div></li>';
+					echo '<li><p align="center"><button class="test_a">交卷</button></p></li>';
 					echo "</ul>";
 					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
 					echo "</div>";
@@ -140,7 +140,7 @@
 			<h6><img src="images/test_fx.png" alt=""><span>分享到	</span></h6>
 			<div class="test_bottom">
 				<ul>
-					<li><div><a href="#"><img src="images/test_wb.png" alt=""></a><p>新浪微博</p></div></li>
+					<li><div><a href="http://v.t.sina.com.cn/share/share.php?title=我在中南易班参加辅导员考试考了++分" target="_self"><img src="images/test_wb.png" alt=""></a><p>新浪微博</p></div></li>
 					<li><div><a href="#"><img src="images/test_qq.png" alt=""></a><p>QQ好友</p></div></li>
 					<li><div><a href="#"><img src="images/test_wx.png" alt=""></a><p>微信好友</p></div></li>
 					<li><div><a href="#"><img src="images/test_pyq.png" alt=""></a><p>朋友圈</p></div></li>
