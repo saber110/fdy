@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once APPPATH."../debug/chromephp/ChromePhp.php";
 
 /**
  * 抽题及校对
@@ -14,17 +15,87 @@ class Exam_model extends CI_Model
     $this->load->dbforge();
   }
 
+
+  public function Updatequoted_num($RadioId=array(1,2,3,4,5,6),$MultiId=array(1,2,3,4,5,6))
+  {
+    foreach($RadioId as $value) {
+      $this->db->select('quoted_num');
+      $query = $this->db->get_where('radio', array('id' => $value));
+      $num = array('quoted_num' => $query->row_array()['quoted_num'] + 1);
+      //ChromePhp::log($num);
+      $this->db->where('id',$value);
+      $this->db->update('radio',$num);
+    }
+    foreach($MultiId as $value) {
+      $this->db->select('quoted_num');
+      $query = $this->db->get_where('Multiple', array('id' => $value));
+      $num = array('quoted_num' => $query->row_array()['quoted_num'] + 1);
+      //ChromePhp::log($num);
+      $this->db->where('id',$value);
+      $this->db->update('Multiple',$num);
+    }
+  }
+
+  public function Updatewrong_num($RadioId=array(1,2,3,4,5,6),$MultiId=array(1,2,3,4,5,6),$updater=0,$updatem=0)
+  {
+    if($updatem == 0)
+    {
+      if(is_array($RadioId))
+      {
+        foreach($RadioId as $value) {
+          $this->db->select('wrong_num');
+          $query = $this->db->get_where('radio', array('id' => $value));
+          $num = array('wrong_num' => $query->row_array()['wrong_num'] + 1);
+          //ChromePhp::log($num);
+          $this->db->where('id',$value);
+          $this->db->update('radio',$num);
+        }
+      }
+      else {
+        $this->db->select('wrong_num');
+        $query = $this->db->get_where('radio', array('id' => $RadioId));
+        $num = array('wrong_num' => $query->row_array()['wrong_num'] + 1);
+        //ChromePhp::log($num);
+        $this->db->where('id',$RadioId);
+        $this->db->update('radio',$num);
+      }
+    }
+    if($updater == 0)
+    {
+      if(is_array($MultiId))
+      {
+        foreach($MultiId as $value) {
+          $this->db->select('wrong_num');
+          $query = $this->db->get_where('Multiple', array('id' => $value));
+          $num = array('wrong_num' => $query->row_array()['wrong_num'] + 1);
+          //ChromePhp::log($num);
+          $this->db->where('id',$value);
+          $this->db->update('Multiple',$num);
+        }
+      }
+      else {
+        $this->db->select('wrong_num');
+        $query = $this->db->get_where('Multiple', array('id' => $MultiId));
+        $num = array('wrong_num' => $query->row_array()['wrong_num'] + 1);
+        //ChromePhp::log($num);
+        $this->db->where('id',$MultiId);
+        $this->db->update('Multiple',$num);
+      }
+
+    }
+  }
   public function UpdateExamination(
                                     $yb_userid=7041045,
                                     $yb_username="胡皓斌",
                                     $name = "胡皓斌",
                                     $college = "物电院",
                                     $score=0,
+                                    $time=0,
                                     $phone = 15675123342,
                                     $email = "huhaobin110@gmail.com"
                                     )
   {
-    $this->db->select('most_score');
+    $this->db->select('most_score,sparetime');
     $query = $this->db->get_where('examination',array('yb_userid'=>$yb_userid));
     if($score > ($query->row_array())['most_score'])
     {
@@ -34,14 +105,22 @@ class Exam_model extends CI_Model
         'college'     => $college,
         'phone'       => $phone,
         'email'       => $email,
-        'most_score'   => $score
+        'most_score'   => $score,
+        'sparetime'   => $time + $query->row_array()['sparetime']
       );
-      $this->db->where('yb_userid',$yb_userid);
-      return $this->db->update('examination',$data);
     }
     else {
-      return "no";
+      $data = array(
+        'yb_username' => $yb_username,
+        'name'        => $name,
+        'college'     => $college,
+        'phone'       => $phone,
+        'email'       => $email,
+        'sparetime'   => $time + $query->row_array()['sparetime']
+      );
     }
+      $this->db->where('yb_userid',$yb_userid);
+      return $this->db->update('examination',$data);
   }
 
   public function UpdateCollege($college='物电院')
@@ -96,9 +175,9 @@ class Exam_model extends CI_Model
         'time'    => array(
                     'type'     => 'timestamp'
                   ),
-        'zanliu'  => array(
+        'sparetime'  => array(
                     'type'     => 'TEXT',
-                    'comment'  => '待用项'
+                    'comment'  => '作答所用时间'
                   ),
         'remark'  => array(
                     'type'     => 'TEXT',
@@ -187,6 +266,8 @@ class Exam_model extends CI_Model
                                   'disc'    => 1,
                                   'writing' => 1))
   {
+    //ChromePhp::log($para['multiple']);
+    $this->Updatequoted_num($para['radio'],$para['multiple']);
     $RadioNum = 0;
     foreach ($para['radio'] as $id) {
       $this->db->select('id,topic,option_A,option_B,option_C,option_D');
@@ -267,104 +348,124 @@ class Exam_model extends CI_Model
     $score = 0;
     $xu_id = 0;
 
-      //单选
-      $num = 0;   //标志答案次序
-      foreach ($InputId['RadioId'] as $value) {
-        $this->db->select('fenzhi');
-        $query = $this->db->get_where('radio',array('id'=>$value,'anwser'=>$anwser[$num]));
-        if($query->num_rows() > 0)
-        {
-            $score = $score + $this->GetFenzhi($value,'radio')['fenzhi'];
-        }
-        else
-        {
-          $wrong['Radio'.$value] = $anwser[$num];
-        }
-        $num ++;
-      }
-      // echo '单选'.$xu_id.'成绩'.$score.'总数'.$this->RadioNum()['RadioNum'].'<br \>';
-      foreach ($InputId['MultiId'] as $value)
+    //单选
+    $num = 0;   //标志答案次序
+    foreach ($InputId['RadioId'] as $value) {
+      $this->db->select('fenzhi');
+      $query = $this->db->get_where('radio',array('id'=>$value,'anwser'=>$anwser[$num]));
+      if($query->num_rows() > 0)
       {
-        $this->db->select('fenzhi');
-        $query = $this->db->get_where('Multiple',array('id'=>$value,'anwser'=>implode('',$anwser[$num])));
-        if($query->num_rows() > 0)  //答案正确
-        {
-            $score = $score + $this->GetFenzhi($value,'Multiple')['fenzhi'];
-            // echo "多选答案正确 ".$score."<br \>";
-        }
-        else        //答案多选
-        {
-          $this->db->select('id,anwser');
-          $query = $this->db->get_where('Multiple',array('id'=>$value));
-          if(strlen($query->row_array()['anwser']) < strlen(implode('',$anwser[$num])))
-          {
-            $score = $score + $this->GetFenzhi($value,'Multiple','more')['more'];
-          }
-          else        //答案少选
-          {
-            $cuoxuan = 0;   //错选标志
-            foreach ($_anwser[$value] as $key)
-            {
-              $this->db->select('anwser');
-              $query = $this->db->get_where('Multiple',array('id'=>$value));
-              if(strpos($query->row_array()['anwser'],$key)===FALSE)  //答案错选
-              {
-                $cuoxuan = 1;
-                // echo "错选 ";
-              }
-              // echo $cuoxuan."<br \>";
-            }
-            if(!$cuoxuan)
-            {
-              $score = $score + $this->GetFenzhi($value,'Multiple','short')['short'];
-              // echo "少选";
-            }
-            else
-            {
-              $wrong['Multi'.$value] = $anwser[$num];
-            }
-          }
-        }
-        $num ++;
+          $score = $score + $this->GetFenzhi($value,'radio')['fenzhi'];
       }
-      /**
-       * 判断题答案盯对
-       */
-    // elseif($xu_id < ($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum'] + $this->TorFNum()['TorFNum']))
-    // {
-    //   //判断
-    //   foreach ($InputId['TorFId'] as $value) {
-    //     echo "判断id ".$value."对应答案".$anwser[$num]."<br \>";
-    //     $this->db->select('fenzhi');
-    //     $query = $this->db->get_where('TorF',array('id'=>$value,'anwser'=>$anwser[$num]));
-    //     if ($query->num_rows() > 0) {
-    //       $score = $score + $this->GetFenzhi($value,'TorF')['fenzhi'];
-    //       // var_dump("n");
-    //     }
-    //     else
-    //     {
-    //       $wrong['TorF'.$value] = $anwser[$num];
-    //     }
-    //     $num ++;
-    //   }
-    // }
-    // else {
-    //   echo "break ".$xu_id."<br \>";
-    //   break;
-    // }
-  return array('score'=>$score,'wrong'=>$wrong);
+      else
+      {
+        $wrongR[$value] = $anwser[$num];
+      }
+      $num ++;
+    }
+    // echo '单选'.$xu_id.'成绩'.$score.'总数'.$this->RadioNum()['RadioNum'].'<br \>';
+    foreach ($InputId['MultiId'] as $value)
+    {
+      $this->db->select('fenzhi');
+      $query = $this->db->get_where('Multiple',array('id'=>$value,'anwser'=>implode('',$anwser[$num])));
+      if($query->num_rows() > 0)  //答案正确
+      {
+          $score = $score + $this->GetFenzhi($value,'Multiple')['fenzhi'];
+          //ChromePhp::log($value."多选答案正确 ".$score."<br \>");
+      }
+      else        //答案多选
+      {
+        $this->db->select('id,anwser');
+        $query = $this->db->get_where('Multiple',array('id'=>$value));
+        if(strlen($query->row_array()['anwser']) < strlen(implode('',$anwser[$num])))
+        {
+          $score = $score + $this->GetFenzhi($value,'Multiple','more')['more'];
+          //ChromePhp::log($value."多".$score."<br \>");
+        }
+        else        //答案少选
+        {
+          $cuoxuan = 0;   //错选标志
+          foreach ($_anwser[$value] as $key)
+          {
+            $this->db->select('anwser');
+            $query = $this->db->get_where('Multiple',array('id'=>$value));
+            if(strpos($query->row_array()['anwser'],$key)===FALSE)  //答案错选
+            {
+              $cuoxuan = 1;
+              //ChromePhp::log($value."错选 ");
+            }
+            // echo $cuoxuan."<br \>";
+          }
+          if(!$cuoxuan)
+          {
+            $score = $score + $this->GetFenzhi($value,'Multiple','short')['short'];
+            //ChromePhp::log($value."少选");
+          }
+          else
+          {
+            $wrongM[$value] = $anwser[$num];
+          }
+        }
+      }
+      $num ++;
+    }
+    /**
+     * 判断题答案盯对
+     */
+  // elseif($xu_id < ($this->RadioNum()['RadioNum'] + $this->MultiNum()['MultiNum'] + $this->TorFNum()['TorFNum']))
+  // {
+  //   //判断
+  //   foreach ($InputId['TorFId'] as $value) {
+  //     echo "判断id ".$value."对应答案".$anwser[$num]."<br \>";
+  //     $this->db->select('fenzhi');
+  //     $query = $this->db->get_where('TorF',array('id'=>$value,'anwser'=>$anwser[$num]));
+  //     if ($query->num_rows() > 0) {
+  //       $score = $score + $this->GetFenzhi($value,'TorF')['fenzhi'];
+  //       // var_dump("n");
+  //     }
+  //     else
+  //     {
+  //       $wrong['TorF'.$value] = $anwser[$num];
+  //     }
+  //     $num ++;
+  //   }
+  // }
+  // else {
+  //   echo "break ".$xu_id."<br \>";
+  //   break;
+  // }
+
+  if(isset($wrongR) && isset($wrongM)) {
+    $this->Updatewrong_num(array_keys($wrongR),array_keys($wrongM));
+  }
+  elseif(!isset($wrongR) && isset($wrongM)){
+    $wrongR = array('null');
+    $this->Updatewrong_num($wrongR,array_keys($wrongM),1);
+  }
+  elseif(isset($wrongR) && !isset($wrongM)){
+    $wrongM = array('null');
+    $this->Updatewrong_num(array_keys($wrongR),$wrongM,0,1);
+  }
+  else {
+    $wrongR = array('null');
+    $wrongM = array('null');
+  }
+
+  return array('score'=>$score,'wrong'=>array_merge($wrongR,$wrongM));
   }
 
   public function InsertScore(
                       $yb_userid=7041045,
                       $score=0,
                       $detail='1:B,2:C',
-                      $wrong ='4:C')
+                      $wrong ='4:C',
+                      $sparetime = 0)
   {
     return $this->db->insert('ex_'.$yb_userid,array(
       'detail' => $detail,
       'score'  => $score,
-      'wrong'  => $wrong
+      'wrong'  => $wrong,
+      'sparetime'=>$sparetime
     ));
   }
 

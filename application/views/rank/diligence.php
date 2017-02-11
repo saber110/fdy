@@ -9,7 +9,7 @@
                             <th>易班id</th>
                             <th>姓名</th>
                             <th>学院</th>
-                            <th>参与次数</th>
+                            <th>学习时间(分钟)</th>
                             <th>最高得分</th>
                         </tr>
                     </thead>

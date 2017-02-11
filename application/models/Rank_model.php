@@ -29,7 +29,7 @@ class Rank_model extends CI_Model
 
   public function Diligence_list($value=10)
   {
-    $sql = "select yb_userid,name,college,count,most_score from examination order by count desc limit $value";
+    $sql = "select yb_userid,name,college,sparetime,most_score from examination order by sparetime desc limit $value";
     $query = $this->db->query($sql);
     return $query->result_array();
   }

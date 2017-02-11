@@ -45,9 +45,13 @@
 					echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_2" value="B" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_2"></label><p>'.$value['option_B']."</p></div></li>";
 					echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_3" value="C" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_3"></label><p>'.$value['option_C']."</p></div></li>";
 					echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_D']."</p></div></li>";
-					// echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_E']."</p></div></li>";
-					// echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_F']."</p></div></li>";
-					// echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_4" value="D" name="mycheckbox'.$value["id"].'">'.'<label for="q'.$num.'_4"></label><p>'.$value['option_G']."</p></div></li>";
+					if(!empty($value['option_E']))
+						echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_5" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_5"></label><p>'.$value['option_E']."</p></div></li>";
+					if(!empty($value['option_F']))
+						echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_6" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_6"></label><p>'.$value['option_F']."</p></div></li>";
+					if(!empty($value['option_G']))
+						echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_7" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_7"></label><p>'.$value['option_G']."</p></div></li>";
+
 					echo "</ul>";
 					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
 					echo "</div>";
@@ -123,7 +127,7 @@
 					echo "<p class='question'>"."<span>Q$num </span>写作题</p>";
 					echo "<ul class='select'>";
 					echo '<li>'.$value['topic'].'</li><br><br><br><br><br>';
-					echo '<li><p align="center"><button class="test_a">交卷</button></p></li>';
+					echo '<li><p id="submit1" align="center"><button class="test_a">交卷</button></p></li>';
 					echo "</ul>";
 					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
 					echo "</div>";

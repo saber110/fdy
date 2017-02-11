@@ -3,7 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * 抽题以及考试. test
+ * 抽题以及考试. test.
  */
 class Exam extends CI_Controller
 {
@@ -73,12 +73,23 @@ class Exam extends CI_Controller
         }
     }
 
-    public function index($value='')
+    public function index($value = '')
     {
-      $this->load->view('home/header');
-      $this->load->view('home/index');
-      $this->load->view('home/footer');
+        $this->load->view('home/header');
+        $this->load->view('home/index');
+        $this->load->view('home/footer');
     }
+
+    public function timer()
+    {
+        $start = strtotime(date('Y-m-d h:i:s'));
+        $timehhh = $start - strtotime($this->session->time);
+        $m = floor(($timehhh % (86400)) / 60);
+        // echo $m;
+        $this->session->TimeSubmit = $m;
+        echo $this->session->TimeSubmit;
+    }
+
     public function UpdateCollege($value = '')
     {
         var_dump($this->Exam_model->UpdateCollege());
@@ -134,15 +145,17 @@ class Exam extends CI_Controller
       $writing = $this->unique_rand($this->Exam_model->WritingSum());
     //下句仅供测试使用
     // $multi = $TF = $short = $disc = $writing ='';
-    $result = array('radio' => $radio, 'multiple' => $multi, 'TorF' => $TF, 'short' => $short, 'disc' => $disc, 'writing' => $writing);
+      $result = array('radio' => $radio, 'multiple' => $multi, 'TorF' => $TF, 'short' => $short, 'disc' => $disc, 'writing' => $writing);
 
       return $result;
   }
 
     public function exam()
     {
+        $this->session->time = date('Y-m-d h:i:s');
+        ChromePhp::log($this->session->time);
         $data['list'] = $this->Exam_model->ReadTopic($this->Extracts());
-        $data['number'] = $this->Exam_model->RadioNum()['RadioNum'];
+        $data['number'] = $this->Exam_model->RadioNum()['RadioNum']+$this->Exam_model->MultiNum()['MultiNum']+$this->Exam_model->TorFNum()['TorFNum']+3;
         // var_dump($data['list']);
         $this->load->view('exam/header');
         $this->load->view('exam/index', $data);
@@ -159,15 +172,17 @@ class Exam extends CI_Controller
         $this->Exam_model->InsertScore($this->data['user_info']['yb_userid'],
                                    $result['score'],
                                    json_encode($this->input->post()),
-                                   json_encode($result['wrong'])
+                                   json_encode($result['wrong']),
+                                   $this->session->TimeSubmit
                                  );
         $this->Exam_model->UpdateExamination($this->data['user_info']['yb_userid'],
                                          $this->data['user_info']['yb_username'],
                                          $this->data['user_info']['yb_realname'],
                                          '物理院',
-                                         $result['score']
+                                         $result['score'],
+                                         $this->session->TimeSubmit
                                          );           //记得填入参数
-    $this->Exam_model->UpdateCollege();
+        $this->Exam_model->UpdateCollege();
         echo $result['score'];
     }
 }
