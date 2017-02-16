@@ -16,5 +16,7 @@
 	<title>辅导员考试学习园地</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/test.css">
 	<link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/share.min.css">
 </head>
+
 <body style="background-color:#1fc587">

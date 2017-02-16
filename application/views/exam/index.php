@@ -1,6 +1,7 @@
 <form method="post" id = "question">
 	<div class="wrapper">
 	<div id="answer" class="card_wrap">
+
 		<?php
 		if(!empty($list['radio'])) {
 			$num = 0;
@@ -122,7 +123,7 @@
 					echo "<p class='question'>"."<span>Q$num </span>写作题</p>";
 					echo "<ul class='select'>";
 					echo '<li>'.$value['topic'].'</li><br><br><br><br><br>';
-					echo '<li><div class="test_btn"<a class="test_a" onclick="confirm();">提交</a></div></li>';
+					echo '<li><p align="center"><button class="test_a">交卷</button></p></li>';
 					echo "</ul>";
 					echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
 					echo "</div>";
@@ -135,23 +136,16 @@
 	</div><!--/card_wrap-->
 
 	<!--  分享页面  -->
+	<div class="social-share" data-initialized="true">
 	<div class="hw-overlay" id="hw-layer">
 		<div class="hw-layer-wrap">
 			<h6><img src="images/test_fx.png" alt=""><span>分享到	</span></h6>
 			<div class="test_bottom">
 				<ul>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_wb.png" alt=""></a><p>新浪微博</p></div></li>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_qq.png" alt=""></a><p>QQ好友</p></div></li>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_wx.png" alt=""></a><p>微信好友</p></div></li>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_pyq.png" alt=""></a><p>朋友圈</p></div></li>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_kj.png" alt=""></a><p>QQ空间</p></div></li>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_twb.png" alt=""></a><p>腾讯微博</p></div></li>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_yb.png" alt=""></a><p>易班</p></div></li>
-					<li><div><a href="#"><img src="<?php echo base_url(); ?>images/test_fz.png" alt=""></a><p>复制链接</p></div></li>
 				</ul>
 			</div>
 		</div>
 	</div>
-
+</div>
 </div>
 </form>
