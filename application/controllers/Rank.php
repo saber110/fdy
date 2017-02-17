@@ -26,7 +26,7 @@ class Rank extends CI_Controller
 
   public function Test($value='')
   {
-    $this->load->view('rank/test');
+    $this->load->view('rank/index');
   }
   public function College_Ranking()
   {

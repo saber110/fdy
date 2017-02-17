@@ -3,77 +3,89 @@
 	padding: 0;
 	border:0;
 	text-decoration: none;
+	-webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  list-style-type: none;
 }
 body {
 	width: 100%;
 	height: 100%;
-	background-image: url('../images/test_back.png');
-	background-repeat: no-repeat;
-	background-position: 0 -10%;
-	background-size: 100%;
-	background-color: #1fc587;
 }
-header {
+.content_img {
+	display: inline-block;
 	width: 100%;
+	height: 60px;
+	padding-left: 10px;
+}
+.content_img img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+}
+.content_img span {
+	position: relative;
+	top: -15px;
+	width: 100px;
+	text-indent: 10px;
+	display: inline-block;
+	font-size: 20px;
+	font-weight: 400;
+	color: #fff;
+}
+.home-content {
+	width: 100%;
+	height: 100%;
+	padding: 40px 0 0 35px;
+}
+.home-content li {
+	list-style-type: none;	
+	height: 40px;
+}
+.home-content a {
+	font-weight: 400;
+	font-size: 18px;
+	display: block;
+	color: #DDDDDD;
+}
+.home-content span {
 	position: absolute;
-	text-align: center;
+	bottom: 15px;
+	right: 14px;
 }
-.content {
-	width: 80%;
-	height: 60%;
-	display: block;
-	position:absolute;
-	top: 25%;
-	margin: 0 auto;
+.toolbar-inner a {
+	font-size: 16px;
 }
-.content a {
-	display: block;
-	width: 60%;
-	margin:0 auto;
-	margin-bottom: 20px;
-	text-align: center;
-}
+
 
 @media only screen and (max-width: 340px) {
 
-	header {
-		top: 11%;
-		font-size: 0.7em;
+	.toolbar-inner a {
+		font-size: 14px;
 	}
-
-}
-@media only screen and (min-width: 341px) and (max-width: 365px) {
-
-	header {
-		top: 11%;
-		font-size: 0.8em;
-	}
-	.content a {
-		font-size: 1.2em;
-	}
-
-}
-@media only screen and (min-width: 366px) and (max-width: 400px) {
-
-	header {
-		top: 11%;
-		font-size: 0.8em;
-	}
-	.content a {
-		font-size: 1.4em;
-		margin-bottom: 25px;
+	.list-block ul li a div {
+		font-size: 14px;
 	}
 
 }
 @media only screen and (min-width: 401px) {
 
-	header {
-		top: 12%;
-		font-size: 0.8em;
+	.home-score p {
+		font-size: 18px;
 	}
-	.content a {
-		font-size: 1.4em;
-		margin-bottom: 25px;
+
+}
+@media only screen and (min-width: 371px) and (max-width: 400px) {
+
+	.home-score p {
+		font-size: 16px;
+	}
+
+}
+@media only screen and (min-width: 341px) and (max-width: 370px) {
+
+	.home-score p {
+		font-size: 18px;
 	}
 
 }
