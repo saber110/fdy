@@ -15,6 +15,17 @@ class Exam_model extends CI_Model
     $this->load->dbforge();
   }
 
+  public function GainHomeData($yb_userid=7041045)
+  {
+    $this->db->select('sparetime,count,most_score');
+    $query1 = $this->db->get_where('examination',array('yb_userid'=>$yb_userid));
+    $result1 = $query1->row_array();
+
+    $sql = "select score,sparetime from ex_$yb_userid order by time desc limit 5";
+    $query2 = $this->db->query($sql);
+    $result2 = $query2->result_array();
+    return array('main' => $result1,'rightsidebar' => $result2);
+  }
 
   public function Updatequoted_num($RadioId=array(1,2,3,4,5,6),$MultiId=array(1,2,3,4,5,6))
   {

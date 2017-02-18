@@ -75,8 +75,10 @@ class Exam extends CI_Controller
 
     public function index($value = '')
     {
+        $result['username'] = $this->data['user_info']['yb_username'] = '胡皓斌';
+        $result['data'] = $this->Exam_model->GainHomeData($this->data['user_info']['yb_userid']);
         $this->load->view('home/header');
-        $this->load->view('home/index');
+        $this->load->view('home/index',$result);
         $this->load->view('home/footer');
     }
 
@@ -153,7 +155,6 @@ class Exam extends CI_Controller
     public function exam()
     {
         $this->session->time = date('Y-m-d h:i:s');
-        ChromePhp::log($this->session->time);
         $data['list'] = $this->Exam_model->ReadTopic($this->Extracts());
         $data['number'] = $this->Exam_model->RadioNum()['RadioNum']+$this->Exam_model->MultiNum()['MultiNum']+$this->Exam_model->TorFNum()['TorFNum']+3;
         // var_dump($data['list']);

@@ -15,7 +15,7 @@ class Rank_model extends CI_Model
 
   public function Personal_Ranking($num=20)
   {
-    $sql = "select yb_userid,name,college,most_score from examination order by last_score desc limit $num";
+    $sql = "select yb_userid,name,college,most_score from examination order by most_score desc limit $num";
     $query = $this->db->query($sql);
     return $query->result_array();
   }

@@ -13,31 +13,14 @@ class Rank extends CI_Controller
     $this->load->model("Rank_model");
   }
 
-  public function Personal_Ranking()
+  public function index()
   {
-    $data = $this->Rank_model->Personal_Ranking(4);
-    var_dump($data);
-    /*
-    $this->load->view('rank/personal/header');
-    $this->load->view('rank/personal/index',$data);
-    $this->load->view('rank/personal/footer');
-    */
+    $personal = $this->Rank_model->Personal_Ranking(10);
+    $college  = $this->Rank_model->College_Ranking(10);
+    $result = array('personal'=>$personal,'college'=>$college);
+    $this->load->view('rank/index',$result);
   }
 
-  public function Test($value='')
-  {
-    $this->load->view('rank/index');
-  }
-  public function College_Ranking()
-  {
-    $data = $this->Rank_model->College_Ranking(10);
-    var_dump($data);
-    /*
-    $this->load->view('rank/college/header');
-    $this->load->view('rank/college/index',$data);
-    $this->load->view('rank/college/footer');
-    */
-   }
    //勤奋榜
    public function Diligence_list()
    {

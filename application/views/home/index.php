@@ -1,4 +1,7 @@
-
+<?php
+require_once APPPATH."../debug/chromephp/ChromePhp.php";
+ChromePhp::log($data);
+?>
 <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar-overlay"></div>
     <!-- Panels overlay-->
@@ -6,12 +9,12 @@
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
       <div class="content-block">
-        <div class="content_img"><img src="images/bang_back.png" alt=""><span>啊哈哈</span></div>
+        <div class="content_img"><img src="images/bang_back.png" alt=""><span><?php echo $username;?></span></div>
         <div class="home-content">
 	      	<ul>
 	      		<li><a href="#"><div>个人资料</div></a></li>
 	      		<li><a href="#"><div>历史成绩</div></a></li>
-	      		<li><a href="#"><div>查看错题</div></a></li>
+	      		<li><a href="<?php echo base_url();?>Rank/Error_Rate"><div>查看错题</div></a></li>
 	      	</ul>
           <span><a href="#">退出</a></span>
       </div>
@@ -23,31 +26,15 @@
         <h3>考试成绩信息</h3>
         <div class="home-score">
           <ul>
-            <li>
-              <p>1</p>
-              <p>考试成绩：<span>80分</span></p>
-              <p>所用时间：<span>5分钟</span></p>
-            </li>
-            <li>
-              <p>2</p>
-              <p>考试成绩：<span>80分</span></p>
-              <p>所用时间：<span>5分钟</span></p>
-            </li>
-            <li>
-              <p>3</p>
-              <p>考试成绩：<span>80分</span></p>
-              <p>所用时间：<span>5分钟</span></p>
-            </li>
-            <li>
-              <p>4</p>
-              <p>考试成绩：<span>80分</span></p>
-              <p>所用时间：<span>5分钟</span></p>
-            </li>
-            <li>
-              <p>5</p>
-              <p>考试成绩：<span>80分</span></p>
-              <p>所用时间：<span>5分钟</span></p>
-            </li>
+            <?php foreach ($data['rightsidebar'] as $key => $value){
+              echo "<li>";
+              $num = $key + 1;
+              echo "<p>$num</p>";
+              ChromePhp::log("score".$value['score']);
+              echo "<p>考试成绩：<span>".$value['score']."分</span></p>";
+              echo "<p>所用时间：<span>".$value['sparetime']."分钟</span></p>";
+              echo "</li>";
+            }?>
           </ul>
         </div>
       </div>
@@ -75,33 +62,33 @@
               <div class="content-block-title">考试成绩信息</div>
               <div class="content-block">
                 <div class="content-block-inner">
-                  <p>最好成绩：<span>100分</span></p>
-                  <p>考试总时长：<span>22小时</span></p>
-                  <p>学习次数：<span>10次</span></p>
+                  <p>最好成绩：<span><?php echo $data['main']['most_score'];?></span></p>
+                  <p>考试总时长：<span><?php echo $data['main']['sparetime'];?>分钟</span></p>
+                  <p>学习次数：<span><?php echo $data['main']['count'];?>次</span></p>
                 </div>
               </div>
               <div class="content-block-title">相关链接</div>
               <div class="list-block">
                 <ul>
-                  <li><a href="#" class="item-link">
+                  <li><a href="<?php echo base_url();?>Exam/exam" class="external">
                       <div class="item-content">
                         <div class="item-inner">
                           <div class="item-title">开始考试</div>
                         </div>
                       </div></a></li>
-                  <li><a href="#" class="item-link">
+                  <li><a href="<?php echo base_url();?>Rank" class="external">
                       <div class="item-content">
                         <div class="item-inner">
                           <div class="item-title">学院、个人排行榜</div>
                         </div>
                       </div></a></li>
-                  <li><a href="#" class="item-link">
+                  <li><a href="<?php echo base_url();?>Rank/Diligence_list" class="external">
                       <div class="item-content">
                         <div class="item-inner">
                           <div class="item-title">勤奋榜</div>
                         </div>
                       </div></a></li>
-                  <li><a href="#" class="item-link">
+                  <li><a href="<?php echo base_url();?>Rank/Error_Rate" class="external">
                       <div class="item-content">
                         <div class="item-inner">
                           <div class="item-title">错题本</div>
