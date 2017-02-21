@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require_once APPPATH."../debug/chromephp/ChromePhp.php";
+require_once FCPATH."debug/chromephp/ChromePhp.php";
 
 /**
  * 抽题及校对
