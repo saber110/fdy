@@ -150,6 +150,18 @@
                           </ul>
                           <!-- /.nav-second-level -->
                       </li>
+                      <li>
+                          <a href="#"><i class="fa-pencil"></i>考试管理<span class="fa arrow"></span></a>
+                          <ul class="nav nav-second-level">
+                              <li>
+                                  <a href="<?php echo site_url();?>Admin/Set/type">初复赛</a>
+                              </li>
+                              <li>
+                                  <a href="<?php echo site_url();?>Admin/Set">题目数量设置</a>
+                              </li>
+                          </ul>
+                          <!-- /.nav-second-level -->
+                      </li>
                   </ul>
               </div>
               <!-- /.sidebar-collapse -->

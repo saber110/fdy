@@ -9,7 +9,7 @@ ChromePhp::log($data);
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
       <div class="content-block">
-        <div class="content_img"><img src="images/bang_back.png" alt=""><span><?php echo $username;?></span></div>
+        <div class="content_img"><img src="<?php echo $userhead;?>" alt=""><span><?php echo $username;?></span></div>
         <div class="home-content">
 	      	<ul>
 	      		<li><a href="#"><div>个人资料</div></a></li>

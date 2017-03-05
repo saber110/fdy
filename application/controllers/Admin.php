@@ -14,13 +14,89 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      $this->load->model('Exam_model');
      $this->load->model('Rank_model');
      $this->load->library('DataOption');
-     $data['user_info']['yb_userid']=7041045;
+    // 服务器
+    $config = array('appID' => 'bd8c29dd94901cfb',
+                   'appSecret' => '31106e82b9501d77cbcb985d98dfcd5e',
+                    'callback' => 'http://f.yiban.cn/iapp98639', );
+     //本地测试
+    //$config = array('appID' => '2603163d78712ee3',
+    //                    'appSecret' => '1ce9ffc76d284c5dde2a2002feed6c45',
+     //                    'callback' => 'http://f.yiban.cn/iapp62933', );
+
+       $this->load->library('YibanSDK', $config, 'yiban');
+      //var_dump($this->session->token);
+      //$au  = $this->yiban->getAuthorize();
+      //var_dump($token);
+       if (!$this->input->get('verify_request')) {
+           $this->session->url = $_SERVER['REQUEST_URI'];
+       }
+       //var_dump($this->session);
+       if (!isset($this->session->token)) {     // 未获取授权
+       /**
+        * 从授权服务器回调返回时，URL中带有code（授权码）参数.
+        */
+         $au = $this->yiban->getAuthorize();
+         //var_dump($this->input->post());
+         if ($this->input->get('verify_request')) {
+             /**
+              * 使用授权码（code）获取访问令牌
+              * 若获取成功，返回 $info['access_token']
+              * 否则查看对应的 msgCN 查看错误信息.
+              */
+             $info = $this->yiban->getFrameUtil()->perform();
+             //var_dump($info);
+             if (!isset($info['visit_oauth']['access_token'])) {
+                 //echo $info['msgCN'];
+                 redirect($au->forwardurl());
+             }
+             $this->session->token = $info['visit_oauth']['access_token'];
+             $this->data['user_info']['yb_userid'] = $info['visit_user']['userid'];
+             $this->data['user_info']['yb_username'] = $info['visit_user']['username'];
+             header('Location: '.$this->session->url);
+         } else {   // 重定向到授权服务器（原sdk使用header()重定向）
+             redirect($au->forwardurl());
+             // header('Location: ' . $au->forwardurl());
+         }
+     }
+     if (!isset($this->data['user_info']['yb_userhead']) && $this->session->token) {
+         $this->user = $this->yiban->getUser($this->session->token);
+         $this->data['user_info'] = $this->user->me()['info'];
+     }
+    //  $data['user_info']['yb_userid']=7041045;
      if($this->Exam_model->Admin($data['user_info']['yb_userid'])==0)
      {
        header("Location: ".base_url()."Exam");
      }
    }
-
+   /**
+    * 设置考试的类型以及题目数量
+    */
+   public function Set($value='num')
+   {
+     if($value=='type')
+     {
+       $data['zhi'] = $this->Admin_model->Settype()['type'];
+       $this->load->view('admin/header');
+       $this->load->view('admin/type',$data);
+       $this->load->view('admin/footer');
+     }
+     else if(empty($this->input->post()))
+     {
+       $data['list'] = $this->Exam_model->GetNum();
+       $data['type'] = "设置数量";  //保证footer正常执行
+       $this->load->view('admin/header');
+       $this->load->view('admin/number',$data);
+       $this->load->view('admin/footer');
+     }
+     else {
+       var_dump($this->input->post());
+       $topic  = $this->input->post()['id'];
+       $RadioNum  = $this->input->post()['num1'];
+       $MultiNum  = $this->input->post()['num2'];
+       $TorFNum  = $this->input->post()['num3'];
+       $this->Admin_model->Setkaoshi($topic,$RadioNum,$MultiNum,$TorFNum);
+     }
+   }
    public function Getall($value='radio')
    {
      return $this->Admin_model->Getall($value);

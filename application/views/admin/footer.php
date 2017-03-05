@@ -17,19 +17,34 @@ function edit(status){
 }
 function  submit(status)
 {
-  var id = document.getElementsByTagName('input')[1].value;
-  var title = document.getElementsByTagName('input')[2].value;
-  var a = document.getElementsByTagName('input')[3].value;
-  var b = document.getElementsByTagName('input')[4].value;
-  var c = document.getElementsByTagName('input')[5].value;
-  var d = document.getElementsByTagName('input')[6].value;
-  var daan = document.getElementsByTagName('input')[7].value;
-  var fen = document.getElementsByTagName('input')[8].value;
-  var type = "<?php echo $type; ?>";
-  $.post("../Edit",{ type: type,id:id,title: title,a:a,b:b,c:c,d:d,daan:daan,fen:fen},function (result) {
-    location.reload(true);
-  }
-  )
+  <?php
+    if($type=="设置数量")
+    {
+      echo "var id = document.getElementsByTagName('input')[1].value;";
+      echo "var num1 = document.getElementsByTagName('input')[2].value;";
+      echo "var num2 = document.getElementsByTagName('input')[3].value;";
+      echo "var num3 = document.getElementsByTagName('input')[4].value;";
+      echo '$.post("../Admin/Set",{ id:id,num1:num1,num2:num2,num3:num3},function (result) {
+        location.reload(true);
+      }
+      )';
+    }
+    else {
+      echo "var id = document.getElementsByTagName('input')[1].value;";
+      echo "var title = document.getElementsByTagName('input')[2].value;";
+      echo "var a = document.getElementsByTagName('input')[3].value;";
+      echo "var b = document.getElementsByTagName('input')[4].value;";
+      echo "var c = document.getElementsByTagName('input')[5].value;";
+      echo "var d = document.getElementsByTagName('input')[6].value;";
+      echo "var daan = document.getElementsByTagName('input')[7].value;";
+      echo "var fen = document.getElementsByTagName('input')[8].value;";
+      echo 'var type = "'.$type.'";';
+      echo '$.post("../Edit",{ type: type,id:id,title: title,a:a,b:b,c:c,d:d,daan:daan,fen:fen},function (result) {
+        location.reload(true);
+      }
+      )';
+    }
+   ?>
 }
 </script>
 

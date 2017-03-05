@@ -12,6 +12,27 @@ class Admin_model extends CI_Model
     parent::__construct();
     $this->load->database();
   }
+  public function Settype($type='')
+  {
+    if($type=='')
+    {
+      $query = $this->db->get('type');
+      return $query->row_array();
+    }
+    else {
+      $this->db->where('id',1);
+      return $this->db->update('type',array('type'=>$type));
+    }
+  }
+  public function Setkaoshi($topic='',$RadioNum='',$MultiNum='',$TorFNum='')
+  {
+    $data = array(
+      'RadioNum' => $RadioNum,
+      'MultiNum' => $MultiNum,
+      'TorFNum' => $TorFNum);
+    $this->db->where('topic',$topic);
+    return $this->db->update('kaoshi',$data);
+  }
   public function Getall($value='radio')
   {
     switch ($value) {

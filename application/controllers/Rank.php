@@ -12,7 +12,10 @@ class Rank extends CI_Controller
     parent::__construct();
     $this->load->model("Rank_model");
   }
-
+    public function select($value = '')
+    {
+        $this->load->view('home/college');
+    }
   public function index()
   {
     $personal = $this->Rank_model->Personal_Ranking(10);

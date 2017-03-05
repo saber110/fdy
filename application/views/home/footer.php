@@ -3,4 +3,12 @@
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/my-app.js"></script>
 </body>
+    <script>
+      var myApp = new Framework7({
+        animateNavBackIcon:true
+      }); 
+      var mainView = myApp.addView('.view-main', {
+        dynamicNavbar: true,
+      });
+    </script>
 </html>
