@@ -147,5 +147,11 @@
 		</div>
 	</div>
 </div>
+
+	<!-- 时间显示 -->
+	<div class="footer_time">
+		<p>所剩时间为：<span><strong>3分20秒</strong></span></p>
+	</div>
+
 </div>
 </form>
