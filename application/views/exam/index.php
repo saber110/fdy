@@ -1,7 +1,6 @@
 <form method="post" id = "question">
 	<div class="wrapper">
 	<div id="answer" class="card_wrap">
-
 		<?php
 		if($type != "复赛")
 		{
@@ -32,7 +31,6 @@
 						echo "</div>";
 					}
 				}
-
 			}
 			if(!empty($list['multi'])) {
 				foreach ($list['multi'] as $key) {
@@ -53,14 +51,12 @@
 							echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_6" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_6"></label><p>'.$value['option_F']."</p></div></li>";
 						if(!empty($value['option_G']))
 							echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_7" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_7"></label><p>'.$value['option_G']."</p></div></li>";
-
 						echo "</ul>";
 						echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
 						echo "</div>";
 						echo "</div>";
 					}
 				}
-
 			}
 			if(!empty($list['TorF'])) {
 				foreach ($list['TorF'] as $key) {
@@ -80,7 +76,6 @@
 						echo "</div>";
 					}
 				}
-
 			}
 			if(!empty($list['short'])) {
 				foreach ($list['short'] as $value) {		//若多个题目,则将value改为key
@@ -99,7 +94,6 @@
 						echo "</div>";
 					}
 				}
-
 			}
 			if(!empty($list['disc'])) {
 				foreach ($list['disc'] as $value) {		//若多个题目,则将value改为key
@@ -117,7 +111,6 @@
 						echo "</div>";
 					}
 				}
-
 			}
 			if(!empty($list['writ'])) {
 				foreach ($list['writ'] as $value) {			//若多个题目,则将value改为key
@@ -136,7 +129,6 @@
 						echo "</div>";
 					}
 				}
-
 			}
 		}
 		else
@@ -179,7 +171,6 @@
 							echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_6" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_6"></label><p>'.$value['option_F']."</p></div></li>";
 						if(!empty($value['option_G']))
 							echo '<li>'.'<div class="squared">'.'<input type="checkbox" id="q'.$num.'_7" value="D" name="mycheckbox'.$value["id"].'[]">'.'<label for="q'.$num.'_7"></label><p>'.$value['option_G']."</p></div></li>";
-
 						echo "</ul>";
 						echo "<div class='card_bottom'><a class='prev'>上一题</a><span><a class='next'>下一题</a><b>$num</b>/$number</span></div>";
 						echo "</div>";
@@ -210,13 +201,12 @@
 			echo "<p class='question'>";
 			echo "<ul class='select'>";
 			echo "<li></li><li></li><li></li>";
-			echo '<li><p id="submit" align="center"><button class="test_a">交卷</button></p></li>';
+			echo '<li><p id="submit1" align="center"><button class="test_a">交卷</button></p></li>';
 			echo "</div>";
 			echo "</div>";
 		}
 		?>
 	</div><!--/card_wrap-->
-
 	<!--  分享页面  -->
 	<div class="social-share" data-initialized="true">
 	<div class="hw-overlay" id="hw-layer">
@@ -235,4 +225,5 @@
 	</div>
 </div>
 </div>
+
 </form>
